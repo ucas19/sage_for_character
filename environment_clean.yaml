@@ -1,0 +1,7 @@
+name: sagemath
+channels:
+  - conda-forge
+dependencies:
+  - sage
+  - numpy
+prefix: /home/wei/.conda/envs/sagemath
