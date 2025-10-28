@@ -1,0 +1,79 @@
+\documentclass[12pt,a4paper]{article}
+
+% 数学相关宏包
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage{amsfonts}
+\usepackage{mathtools}
+\usepackage{geometry}
+\usepackage{graphicx}
+\usepackage[bookmarks = false]{hyperref}
+\usepackage{xcolor}
+\usepackage{enumitem}
+%\usepackage{ctex}
+\makeatletter
+\renewcommand{\maketitle}{
+    \begin{center}
+        \vspace*{-1cm}  % 调整这个值来控制顶部间距
+        {\LARGE\bfseries \@title \par}
+        \vspace{0.2cm}  % 标题与作者间距
+        {\large \@author }
+%        \vspace{-0cm}  % 作者与日期间距
+        {\normalsize \@date \par}
+        \vspace{1cm}    % 日期与正文间距
+    \end{center}
+}
+\makeatother
+
+% 页面设置
+\geometry{left=1.5cm,right=1.5cm,top=1.5cm,bottom=1.5cm}
+
+% 超链接设置
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    urlcolor=blue,
+    citecolor=red
+}
+
+% 定理环境定义
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{definition}{Definition}[section]
+\newtheorem{example}{Exalple}[section]
+\newtheorem{remark}{Remark}[section]
+
+% 数学符号定义
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\prl}{pr_{\lambda}}
+\newcommand{\prt}{pr_{\theta}}
+% 文档信息
+\title{My article }
+\author{Wei}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+$\lambda = (a,-c,b|b )$
+
+\section{$b<c\leq a$}
+\subsection{$ b+1 < c $}
+$\prl(P_{a,-c,b+1|b} \otimes V ) = \sum(a,-c,b,b) + \sum(a,-c,b+1,b+1)$
+\subsection{$ b+1 = c $ $\lambda = (a,b-1,b,b) $}
+\subsubsection{ $ a>c $}
+$\prl(P_{a,-b-1,b+1|b} \otimes V ) = \sum(a,-b-1,b,b) + \sum(a,-b-1,b+1,b+1)$
+\subsubsection{ $ a = c $}
+
+$\prl(P_{b+2,-b-1,b+1|b} \otimes V ) = \sum M_(b+2,-b-1,b,b) + \sum M_(b+2,-b-1,b+1,b+1) +\sum M_(b+2,-b-1,b+1,b+2)$
+
+
+\end{document}
+
+
+

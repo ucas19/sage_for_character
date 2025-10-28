@@ -202,6 +202,16 @@ def test_a(nn,mm,typical_lambda_sp,typical_lambda_so,atypical_lambda_sp_plus_so,
 
 
 
+
+def zhengli(sum_sp_plus_so):
+    immutable_vecs = [vector(v, immutable=True) for v in sum_sp_plus_so]
+    sum_sp_plus_so_count = Counter(immutable_vecs)
+    count=_sage_const_1 
+    print("----------统计如下----------")
+    for v,n in sum_sp_plus_so_count.items():
+        print(f"{count}: {v} 数量{n}")
+        count +=_sage_const_1 
+
 if __name__ == "__main__":
 
     lambda_sp = vector(QQ,[_sage_const_3 /_sage_const_2 , _sage_const_3 /_sage_const_2 ])
@@ -221,6 +231,7 @@ if __name__ == "__main__":
         print("5,计算两个向量集合相减")
         print("6,直接计算typical权")
         print("7,计算P_tensor_W,但是不投射,找到极小权")
+        print("8,整理权集")
         select_case = int(input("你的选择是:"))
         if select_case==_sage_const_1 :
             user_input = input("请输入文档的名字:")# 将输入转换为有理数列表并创建向量
@@ -324,6 +335,12 @@ if __name__ == "__main__":
             elif which_mod==_sage_const_3 :
                 print("使用模:g")# 将输入转换为有理数列表并创建向量
                 P_tensor_V_show(P_mu_tensor_V_after_Pr,_sage_const_3 ,n,m)
+
+        elif select_case==_sage_const_8 :
+            user_input = input("请输入权集所在文档的名字:")# 将输入转换为有理数列表并创建向量
+                
+            P_mu_tensor_V_after_Pr = read_vectors_from_file("test//"+user_input+".txt")
+            zhengli(P_mu_tensor_V_after_Pr)
         else:
 
             continue
