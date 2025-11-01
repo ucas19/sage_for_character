@@ -240,6 +240,9 @@ def which_one_lowest(P_mu_tensor_V_after_Pr, basis_plus):
             result, coefficients = is_nonnegative_integer_combination_sage(lambda_sp_plus_so-v, basis_plus)
             if result:
                 flag = False
+#                print(f"测试1-{lambda_sp_plus_so}")
+#                print(f"测试2-{v}")
+#                print(f"测试3-{coefficients}")
                 break
         if flag:   
             show_P_mu.append(lambda_sp_plus_so)
@@ -326,6 +329,7 @@ def is_tensor_V_true(lambda_sp_plus_so, P_mu_tensor_V_after_Pr, basis_plus):
         print(show_P_mu)
         print(f"展开整理如下:")
         print(P_mu_tensor_V_after_Pr)
+        print(f"数量: {len(P_mu_tensor_V_after_Pr)}")
 
     return flag
 
@@ -481,15 +485,17 @@ def K_L_decompose(W_sp,w_sp, lambda_sp_next, W_so, w_so, lambda_so_next):
         #        print(f"这里是rep--{rep}")
         is_bruhat_le_reverse = w_sp.bruhat_le(rep)
         if w_sp.bruhat_le(rep) or w_sp == rep:
-            #print(f"sp的kl多项式的sum中weyl元={rep}")
-            #print(f"sp的kl多项式的sum中后M_?集合={rep.to_matrix() * lambda_sp_next }")
-            #           sum_sp.append(rep.to_matrix() * lambda_sp_next)
+            #sum_sp.append(rep.to_matrix() * lambda_sp_next)
 
             #w_sp_cox = W_sp_coxeter.from_reduced_word(w_sp.reduced_word())
             #rep_cox = W_sp_coxeter.from_reduced_word(rep.reduced_word())
             #k_l_on_one = W_sp_coxeter.kazhdan_lusztig_polynomial(rep_cox*W_sp_coxeter.long_element(),w_sp_cox*W_sp_coxeter.long_element())
             k_l_poly = KL_sp.P(rep*W_sp.W.long_element(),w_sp*W_sp.W.long_element())
             k_l_on_one=k_l_poly(1)
+#            if k_l_on_one > 1:
+#                print(f"sp的kl多项式的sum中weyl元={rep}")
+#                print(f"sp的kl多项式的sum中后M_?集合={rep.to_matrix() * lambda_sp_next }")
+
             for i in range(k_l_on_one):
                 sum_sp_weyl.append(rep)
 
