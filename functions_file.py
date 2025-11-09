@@ -64,9 +64,11 @@ def read_vectors_from_file(filename):
         print(f"错误: 文件 '{filename}' 未找到")
         return []
     print("全部解析成功")
+    print(f"解析向量数量: {len(vectors)}")
     return vectors
 
 # 主程序
+# 以下代码没用到
 
 def read_rational_vectors(filename):
     """
