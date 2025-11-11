@@ -2,7 +2,6 @@
 from typing import Counter
 #from functions import show_steps
 #from functions import is_tensor_V_true
-#from functions import is_tensor_V_true_not_show
 from weyl_group_Bn import Weyl_Group_Bn
 from sage.groups.perm_gps.permgroup_named import SymmetricGroup
 from sage.rings.rational_field import QQ
@@ -267,6 +266,7 @@ def find_path_vector( lam, n, m , which_mod):
                 lam_so_after = w_so.to_matrix() * lam_so
                 sp_plus_so = vector(QQ, list(lam_sp_after)+list(lam_so_after))
                 for v in lowest_module.S2V:
+                    test = vector(QQ,[1/2,-1/2,3/2, 3/2])
                     at_lambda_sp_plus_so = v + sp_plus_so
  #                   print(f"test: {test}")
                     at_lambda_sp_plus_so_hash = tuple(at_lambda_sp_plus_so) 
@@ -280,6 +280,15 @@ def find_path_vector( lam, n, m , which_mod):
                         P_vectors.append(result_ju.result)
     
                     P_mu_tensor_V_befor_Pr, P_mu_tensor_V_after_Pr = P_tensor_V_not_show(lam, P_vectors,lowest_module.S2V,n,m)
+                    if test == at_lambda_sp_plus_so:
+                        print(f"测试这里")
+                        print(f"w_sp: {w_sp}")
+                        print(f"w_so: {w_so}")
+                        print(f"lam_sp_after: {lam_sp_after}")
+                        print(f"lam_so_after: {lam_so_after}")
+                        print(f"v: {v}")
+                        print(f"at_lambda_sp_plus_so: {at_lambda_sp_plus_so}")
+                        print(P_vectors)
                     if is_tensor_V_true_not_show(lam,P_mu_tensor_V_after_Pr, lowest_module.basis_plus):
                         results_S2V.append(at_lambda_sp_plus_so)
     if which_mod ==3:
@@ -307,45 +316,8 @@ def find_path_vector( lam, n, m , which_mod):
     return results_V, results_S2V, results_g
 
 
-def deal_with_typi_ten(again_lam, P_weights, which_mod , n, m ):
 
-        P_mu_tensor_V_after_Pr = again_calc(again_lam, P_weights, which_mod,n,m)
 
-        if P_mu_tensor_V_after_Pr is None:
-            print(f"不是极小权，结束循环")
-            return False
-        print(f"循环要处理的总数: {len(P_mu_tensor_V_after_Pr)}")
-
- #       with open("test://front2.txt", "w", encoding="utf-8") as f:
- #           f.write("\n".join(P_mu_tensor_V_after_Pr))  # 每个元素一行
-
-        weight_set = P_mu_tensor_V_after_Pr[:]
-        lowest_module = Lowest_Module(n,m)
-        flag = False
-        while True:
-            minest_tem = which_one_lowest( weight_set,lowest_module.basis_plus)
-            for typical_lambda_sp_plus_so in minest_tem:
-                print("------------------------")
-                print(f"处理的极小权为: {typical_lambda_sp_plus_so} \n")
-                print(f"剩下: {len(weight_set)}")
-                typical_lambda_sp = typical_lambda_sp_plus_so[:n]
-                typical_lambda_so = typical_lambda_sp_plus_so[-m:]
-                
-                results = test_K_L(n,m,typical_lambda_sp,typical_lambda_so,1)
-                weight_set = vectors_set_min( weight_set,results ) 
-                if weight_set is None:
-                    break
-
-            if weight_set is None:
-                print(f"---- 恭喜你，结果是None ! ---- ")
-                flag =True
-                break
-
-            if weight_set == []:
-                print(f"---- 判断失效，请选择向量重新判断 ----")
-                flag = False
-                break
-        return flag
 
 
 
@@ -372,7 +344,7 @@ if __name__ == "__main__":
         print("8,整理权集")
         print("9,批量直接计算atypical权集的特征标")
         print("10,慎用,一条龙计算,出发点是一个front文件, 一个behind文件, 一个lam文件")
-        print("11,慎用,暴力寻解,计算速度极慢.计算可能能用来计算的权")
+        print("11,计算可能能用来计算的权")
 
         while True:
             try:
@@ -570,77 +542,58 @@ if __name__ == "__main__":
             user_input_lam = input("请输入lam(要投射的向量)所在文档的名字:")# 将输入转换为有理数列表并创建向量
             front = read_vectors_from_file("test//"+user_input_front+".txt")
             behind = read_vectors_from_file("test//"+user_input_behind+".txt")
-            lam_s = read_vectors_from_file("test//"+user_input_lam+".txt")
             P_weights = vectors_set_min(front,behind)
 
-#            with open('test//'+user_input_lam +'.txt', 'r') as f:
-#                lines = f.readlines()
-#            rat_list = [QQ(x.strip()) for x in lines[0].split(',')]
-#            again_lam = vector(QQ,rat_list)          
+#            with open("test://P.txt", "w", encoding="utf-8") as f:
+#                f.write("\n".join(P_weights))  # 每个元素一行
 
-            while True:
-                try:
-                    which_mod = int(input("你的选择是: "))
-                    break  # 如果成功转换为整数，跳出循环
-                except ValueError:
-                    print("输入无效，请输入一个整数。")
-            print(f"which_mod: {which_mod}")
+#            test = read_vectors_from_file("test//"+"P"+".txt")
+#            print(f"写入文件P共{len(test)}个向量")
 
-#            which_mod = int(lines[1])
+            with open('test//'+user_input_lam +'.txt', 'r') as f:
+                lines = f.readlines()
+            rat_list = [QQ(x.strip()) for x in lines[0].split(',')]
+            again_lam = vector(QQ,rat_list)          
+
+            which_mod = int(lines[1])
             if which_mod ==1:
                 print("使用模:V")# 将输入转换为有理数列表并创建向量
             elif which_mod==2:
                 print("使用模:S2V")# 将输入转换为有理数列表并创建向量
             elif which_mod==3:
                 print("使用模:g")# 将输入转换为有理数列表并创建向量
+            P_mu_tensor_V_after_Pr = again_calc(again_lam, P_weights, which_mod,n,m)
+            if P_mu_tensor_V_after_Pr is None:
+                print(f"不是极小权，结束循环")
+                continue
+            print(f"循环要处理的总数: {len(P_mu_tensor_V_after_Pr)}")
 
-            results_ten = []
-            for lam in lam_s:
-                flag = deal_with_typi_ten(lam,P_weights,which_mod,n,m)
-                if flag:
-                    results_ten.append(lam)
+ #           with open("test://front2.txt", "w", encoding="utf-8") as f:
+ #               f.write("\n".join(P_mu_tensor_V_after_Pr))  # 每个元素一行
 
+            weight_set = P_mu_tensor_V_after_Pr[:]
+            lowest_module = Lowest_Module(n,m)
+            while True:
+                minest_tem = which_one_lowest( weight_set,lowest_module.basis_plus)
+                for typical_lambda_sp_plus_so in minest_tem:
+                    print("------------------------")
+                    print(f"处理的极小权为: {typical_lambda_sp_plus_so} \n")
+                    print(f"剩下: {len(weight_set)}")
+                    typical_lambda_sp = typical_lambda_sp_plus_so[:n]
+                    typical_lambda_so = typical_lambda_sp_plus_so[-m:]
+                    
+                    results = test_K_L(n,m,typical_lambda_sp,typical_lambda_so,1)
+                    weight_set = vectors_set_min( weight_set,results ) 
+                    if weight_set is None:
+                        break
 
-            print("--------------")
-            print("打印结果")
-            if results_ten==[]:
-                print("判断失效，都不行")
-            else:
-                for i in range(len(results_ten)):
-                    print(f"{i+1}: {results_ten[i]}")
+                if weight_set is None:
+                    print(f"---- 恭喜你，结果是None ! ---- ")
+                    break
 
-#            P_mu_tensor_V_after_Pr = again_calc(again_lam, P_weights, which_mod,n,m)
-#            if P_mu_tensor_V_after_Pr is None:
-#                print(f"不是极小权，结束循环")
-#                continue
-#            print(f"循环要处理的总数: {len(P_mu_tensor_V_after_Pr)}")
-#
-# #           with open("test://front2.txt", "w", encoding="utf-8") as f:
-# #               f.write("\n".join(P_mu_tensor_V_after_Pr))  # 每个元素一行
-#
-#            weight_set = P_mu_tensor_V_after_Pr[:]
-#            lowest_module = Lowest_Module(n,m)
-#            while True:
-#                minest_tem = which_one_lowest( weight_set,lowest_module.basis_plus)
-#                for typical_lambda_sp_plus_so in minest_tem:
-#                    print("------------------------")
-#                    print(f"处理的极小权为: {typical_lambda_sp_plus_so} \n")
-#                    print(f"剩下: {len(weight_set)}")
-#                    typical_lambda_sp = typical_lambda_sp_plus_so[:n]
-#                    typical_lambda_so = typical_lambda_sp_plus_so[-m:]
-#                    
-#                    results = test_K_L(n,m,typical_lambda_sp,typical_lambda_so,1)
-#                    weight_set = vectors_set_min( weight_set,results ) 
-#                    if weight_set is None:
-#                        break
-#
-#                if weight_set is None:
-#                    print(f"---- 恭喜你，结果是None ! ---- ")
-#                    break
-#
-#                if weight_set == []:
-#                    print(f"---- 判断失效，请选择向量重新判断 ----")
-#                    break
+                if weight_set == []:
+                    print(f"---- 判断失效，请选择向量重新判断 ----")
+                    break
 
         elif select_case == 11:
 
@@ -670,7 +623,7 @@ if __name__ == "__main__":
                 results = results_g
 
             count = 1
-            for v in results:
+            for v in results_V:
                 print(f"{count}向量: {v}")
                 count+=1
             

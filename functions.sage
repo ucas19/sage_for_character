@@ -231,6 +231,26 @@ def P_tensor_V(lambda_sp_plus_so,sum_sp_plus_so,V,n,m):
     return P_mu_tensor_V_befor_Pr, P_mu_tensor_V_after_Pr
 
 
+
+def P_tensor_V_not_show(lambda_sp_plus_so,sum_sp_plus_so,V,n,m):
+
+#    print("P_mu_tensor_V如下:")
+    P_mu_tensor_V_befor_Pr = []
+    P_mu_tensor_V_after_Pr = []
+    calc_sum = 1
+    for v in sum_sp_plus_so:
+        for w in V:
+            P_mu_tensor_V_befor_Pr.append(v+w)
+            #print(f"{calc_sum}:  {v+w}")
+            calc_sum +=1
+            if(check_arrays((v+w).list(), lambda_sp_plus_so.list(), n, m)):
+                P_mu_tensor_V_after_Pr.append(v+w)
+#    print(f"不再展示P_mu_tensor_V了,个数是:{calc_sum}")
+    return P_mu_tensor_V_befor_Pr, P_mu_tensor_V_after_Pr
+
+
+
+
 def which_one_lowest(P_mu_tensor_V_after_Pr, basis_plus):
     
     show_P_mu = []
@@ -325,13 +345,54 @@ def is_tensor_V_true(lambda_sp_plus_so, P_mu_tensor_V_after_Pr, basis_plus):
         print(f"数据有问题，{lambda_sp_plus_so}不在里面。")
         return False
     if flag:
-        print(f"整理如下:")
-        print(show_P_mu)
+#        print(f"整理如下:")
+#        print(show_P_mu)
         print(f"展开整理如下:")
         print(P_mu_tensor_V_after_Pr)
         print(f"数量: {len(P_mu_tensor_V_after_Pr)}")
 
     return flag
+
+
+def is_tensor_V_true_not_show(lambda_sp_plus_so, P_mu_tensor_V_after_Pr, basis_plus):
+#    print("Pr_P_mu_tensor_V如下:")
+    calc_sum = 1
+    flag = True
+    is_in = False
+    immutable_vecs = [vector(v, immutable=True) for v in P_mu_tensor_V_after_Pr]
+    P_mu_tensor_V_after_Pr_dic = Counter(immutable_vecs)
+    show_P_mu = []
+    for v, k in P_mu_tensor_V_after_Pr_dic.items():
+        if v == lambda_sp_plus_so:
+            is_in = True
+#        print(f"{calc_sum}:  {v} 数量:{k}")
+        calc_sum +=1
+        
+        result, coefficients = is_nonnegative_integer_combination_sage(lambda_sp_plus_so-v, basis_plus)
+
+#        test = vector(QQ,[-1/2,-3/2,3/2,3/2])
+#        if test == v:
+#            print()
+
+        if result:
+ #           print(f"第{calc_sum-1}个向量{v}比{lambda_sp_plus_so}小, 因此空间不成立系数是{coefficients}")
+            flag = False
+        else:
+            show_P_mu.append(v)
+    if is_in== False:
+ #       print(f"数据有问题，{lambda_sp_plus_so}不在里面。")
+        return False
+#    if flag:
+ #       print(f"整理如下:")
+  #      print(show_P_mu)
+#        print(f"展开整理如下:")
+#        print(P_mu_tensor_V_after_Pr)
+#        print(f"数量: {len(P_mu_tensor_V_after_Pr)}")
+
+    return flag
+
+
+
 
 
 
