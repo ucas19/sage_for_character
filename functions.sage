@@ -509,6 +509,10 @@ def K_L_decompose(W_sp,w_sp, lambda_sp_next, W_so, w_so, lambda_so_next):
     #这里得到S_sp（S_so）为生成元的子抛物子群的最小左陪集代表元集合
     min_left_coset_reps_sp = get_coset_representatives(W_sp, S_sp)
     min_left_coset_reps_so = get_coset_representatives(W_so, S_so)
+    print("S_sp")
+    print("min_left_coset_reps_sp")
+    print("S_so")
+    print("min_left_coset_reps_so")
 
     #这里是在最小左陪集代表元集合中，找到符合条件的，也就是比w_sp大的元素
     sum_sp_weyl = []
@@ -554,8 +558,11 @@ def K_L_decompose(W_sp,w_sp, lambda_sp_next, W_so, w_so, lambda_so_next):
             k_l_poly = KL_sp.P(rep*W_sp.W.long_element(),w_sp*W_sp.W.long_element())
             k_l_on_one=k_l_poly(1)
 #            if k_l_on_one > 1:
-#                print(f"sp的kl多项式的sum中weyl元={rep}")
-#                print(f"sp的kl多项式的sum中后M_?集合={rep.to_matrix() * lambda_sp_next }")
+
+            print(f"sp: {w_sp}")
+            print(f"sp_kl: {k_l_poly}")
+            print(f"sp的kl多项式的sum中weyl元={rep}")
+            print(f"sp的kl多项式的sum中后M_?集合={rep.to_matrix() * lambda_sp_next }")
 
             for i in range(k_l_on_one):
                 sum_sp_weyl.append(rep)
@@ -572,6 +579,11 @@ def K_L_decompose(W_sp,w_sp, lambda_sp_next, W_so, w_so, lambda_so_next):
             #k_l_on_one = W_so_coxeter.kazhdan_lusztig_polynomial(rep_cox*W_so_coxeter.long_element(),w_so_cox*W_so_coxeter.long_element())
             k_l_poly = KL_so.P(rep*W_so.W.long_element(),w_so*W_so.W.long_element())
             k_l_on_one= k_l_poly(1)
+
+            print(f"so: {w_so}")
+            print(f"so_kl: {k_l_poly}")
+            print(f"so的kl多项式的sum中weyl元={rep}")
+            print(f"so的kl多项式的sum中后M_?集合={rep.to_matrix() * lambda_so_next }")
             for i in range(k_l_on_one):
                 sum_so_weyl.append(rep)
 

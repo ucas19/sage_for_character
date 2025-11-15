@@ -9,7 +9,8 @@
 \usepackage[bookmarks = false]{hyperref}
 \usepackage{xcolor}
 \usepackage{enumitem}
-%\usepackage{ctex}
+\usepackage[scheme=plain]{ctex}
+\usepackage{xcolor}
 \makeatletter
 \renewcommand{\maketitle}{
     \begin{center}
@@ -52,25 +53,336 @@
 \newcommand{\C}{\mathbb{C}}
 \newcommand{\prl}{pr_{\lambda}}
 \newcommand{\prt}{pr_{\theta}}
+\newcommand{\fracc}[1]{\frac{#1}{2}}
 % 文档信息
-\title{My article }
+\title{Exalples  }
 \author{Wei}
 \date{\today}
 
 \begin{document}
 \maketitle
 
-$\lambda = (a,-c,b|b )$
+\section{举例}
 
-\section{$b<c\leq a$}
-\subsection{$ b+1 < c $}
-$\prl(P_{a,-c,b+1|b} \otimes V ) = \sum(a,-c,b,b) + \sum(a,-c,b+1,b+1)$
-\subsection{$ b+1 = c $ $\lambda = (a,b-1,b,b) $}
-\subsubsection{ $ a>c $}
-$\prl(P_{a,-b-1,b+1|b} \otimes V ) = \sum(a,-b-1,b,b) + \sum(a,-b-1,b+1,b+1)$
-\subsubsection{ $ a = c $}
+\begin{example}
+  文章P37页: $\lambda = (\fracc{1},-\fracc{1},\fracc{1}|\fracc{1} )$.
+  %文章P39页: $\lambda = (b,a,-c|c )$ where $ c = a > b+1 $
+文章结果是(共有20个): 
+\begin{equation} \label{eq:1}
+\begin{split}
+  P_{\lambda} =& M_{\fracc{1}, -\fracc{1},\fracc{1},\fracc{1}}
+  +M_{\fracc{1}, \fracc{1},-\fracc{1},\fracc{1}}
+  +M_{\fracc{1}, \fracc{1},\fracc{1},-\fracc{1}}
+  +M_{\fracc{1}, \fracc{1},\fracc{1},\fracc{1}}
+  +2M_{\fracc{3}, -\fracc{1},\fracc{1},\fracc{3}}
+  +2M_{\fracc{3}, \fracc{1},-\fracc{1},\fracc{3}} \\
+               &+M_{\fracc{3}, \fracc{1},\fracc{1},-\fracc{3}}
+  +M_{\fracc{1}, \fracc{3},-\fracc{1},\fracc{3}}
+  +M_{\fracc{1}, -\fracc{1},\fracc{3},\fracc{3}}
+  +M_{\fracc{5}, \fracc{1},-\fracc{1},\fracc{5}}
+  +M_{\fracc{5}, -\fracc{1},\fracc{1},\fracc{5}}
+  +M_{\fracc{1}, \fracc{3},\fracc{1},\fracc{3}}  \\
+               &+M_{\fracc{1}, \fracc{1},\fracc{3},\fracc{3}}  
+  +3M_{\fracc{3}, \fracc{1},\fracc{1},\fracc{3}}  
+  +3M_{\fracc{5}, \fracc{1},\fracc{1},\fracc{5}}  
+%  P_{\lambda} = \sum M_{b,c,-c|c} +\sum M_{b,c+1,-c|c+1} + \sum M_{b,c,-c+1|c-1} + M_{c,c,b,c+1} +M_{c,c,-b,c-1}
+\end{split}
+\end{equation}
+我们重现计算过程:
+\begin{align*}
+P_{\fracc{3}, \fracc{1},\fracc{1},\fracc{1}} 
+ =&M_{\fracc{3}, \fracc{1},\fracc{1},\fracc{1}}
+ +M_{\fracc{3}, \fracc{1},\fracc{3},\fracc{3}}
+ +M_{\fracc{3}, \fracc{3},\fracc{1},\fracc{3}}
+ +M_{\fracc{5}, \fracc{3},\fracc{1},\fracc{5}}
+ +M_{\fracc{5}, \fracc{1},\fracc{3},\fracc{5}}
+\end{align*}
+\begin{align*}
+  \prl(P_{\fracc{3}, \fracc{1},\fracc{1},\fracc{1}} \otimes S^2V )
+    = P_{\lambda}
+\end{align*}
+但是, 事实上不是这样.
+\begin{align*}
+P_{\fracc{3}, -\fracc{1},\fracc{3},\fracc{1}} 
+=&M_{\fracc{3},\fracc{1},\fracc{3}|\fracc{1}}
++M_{\fracc{3},-\fracc{1},\fracc{3}|\fracc{1}}
++M_{\fracc{3},\fracc{1},\fracc{3}|-\fracc{1}}
++M_{\fracc{3},\fracc{3},\fracc{1}|\fracc{1}} \\
+&+M_{\fracc{3},\fracc{3},-\fracc{1}|\fracc{1}}
++M_{\fracc{3},\fracc{3},\fracc{1}|-\fracc{1}}
++M_{\fracc{3},\fracc{3},\fracc{3}|\fracc{3}}
++M_{\fracc{5},\fracc{3},\fracc{3}|\fracc{5}}
+\end{align*}
+然后我们用这个投射盖计算
+\begin{equation}\label{eq:2}
+  \begin{split}
+  \prl(P_{\fracc{3}, -\fracc{1},\fracc{3},\fracc{1}} \otimes S^2V )
+  =&2M_{\fracc{1},\fracc{1},\fracc{1}|\fracc{1}}
++2M_{\fracc{1},\fracc{1},\fracc{3}|\fracc{3}}
++3M_{\fracc{3},\fracc{1},\fracc{1}|\fracc{3}}
++M_{\fracc{1},-\fracc{1},\fracc{1}|\fracc{1}}
++M_{\fracc{1},-\fracc{1},\fracc{3}|\fracc{3}}\\
+   &+M_{\fracc{3},-\fracc{1},\fracc{1}|\fracc{3}}
++2M_{\fracc{1},\fracc{1},\fracc{1}|-\fracc{1}} 
++M_{\fracc{1},\fracc{1},\fracc{3}|-\fracc{3}}
++2M_{\fracc{3},\fracc{1},\fracc{1}|-\fracc{3}}
++2M_{\fracc{1},\fracc{3},\fracc{1}|\fracc{3}} \\
+   &+M_{\fracc{1},\fracc{1},-\fracc{1}|\fracc{1}}
++M_{\fracc{1},\fracc{3},-\fracc{1}|\fracc{3}}
++M_{\fracc{3},\fracc{1},-\fracc{1}|\fracc{3}}
++M_{\fracc{1},\fracc{3},\fracc{1}|-\fracc{3}}
++M_{\fracc{5},\fracc{1},\fracc{1}|\fracc{5}}
+\end{split}
+\end{equation}
+我们对比公式\eqref{eq:1}和\eqref{eq:2}. 我们知道公式\eqref{eq:1}并不是正确的结果. 
 
-$\prl(P_{b+2,-b-1,b+1|b} \otimes V ) = \sum M_(b+2,-b-1,b,b) + \sum M_(b+2,-b-1,b+1,b+1) +\sum M_(b+2,-b-1,b+1,b+2)$
+正确结果应该是:
+\begin{equation}
+  \begin{split}
+    P_\lambda = 
+&M_{\fracc{1},-\fracc{1},\fracc{1}|\fracc{1}}
++M_{\fracc{3},-\fracc{1},\fracc{1}|\fracc{3}}
++M_{\fracc{1},\fracc{1},\fracc{1}|-\fracc{1}}
++M_{\fracc{1},-\fracc{1},\fracc{3}|\fracc{3}}
++M_{\fracc{3},\fracc{1},\fracc{1}|-\fracc{3}} \\
+&+M_{\fracc{1},\fracc{1},\fracc{1}|\fracc{1}}
++M_{\fracc{1},\fracc{1},-\fracc{1}|\fracc{1}}
++M_{\fracc{3},\fracc{1},\fracc{1}|\fracc{3}}
++M_{\fracc{3},\fracc{1},-\fracc{1}|\fracc{3}}
++M_{\fracc{1},\fracc{1},\fracc{3}|\fracc{3}}\\
+&+M_{\fracc{1},\fracc{3},-\fracc{1}|\fracc{3}}
++M_{\fracc{1},\fracc{3},\fracc{1}|\fracc{3}}
++M_{\fracc{5},\fracc{1},\fracc{1}|\fracc{5}}
++M_{\fracc{3},\fracc{1},\fracc{1}|\fracc{3}}
+  \end{split}
+\end{equation}
+
+  
+\end{example}
+
+
+
+\begin{example} \label{example:2}
+文章定理4.3.16(61页)中, $\lambda = (-c-1,c,a|-c-1), \mu = (-c,c,a|-c-1)$ 其中$b+1=-c<a$, 令$\lambda' = (-a,c,c|c+1)$.
+文章计算得到(顺序稍有不同):
+\begin{equation*}
+  \begin{split}
+  P_{\mu} = &M_{a,-c,c|-c-1}
+ +\fcolorbox{red}{white}{$M_{a,-c,-c|-c-1}$}
++M_{a,c,-c|-c-1}
++M_{-c,c,a|-c-1} \\
+  &+M_{-c,a,c|-c-1}
++M_{-c,a,-c|-c-1}
++M_{-c,-c,a|-c-1}
+  \end{split}
+\end{equation*}
+事实上, 计算应得到
+\begin{equation*}
+  \begin{split}
+  P_{\mu} =P_{\sigma\lambda'}
+  =& p_{\tau_1w_0,\sigma w_0}(1)M_{\tau_1 \lambda'}
+  +p_{\tau_2,\sigma w_0 }(1)M_{\tau_1 \lambda'}
+  +p_{\tau_3,\sigma w_0 }(1)M_{\tau_1 \lambda'} 
+  +p_{\tau_4,\sigma w_0 }(1)M_{\tau_1 \lambda'} \\
+  &+p_{\tau_5,\sigma w_0 }(1)M_{\tau_1 \lambda'}
+  +p_{\tau_6,\sigma w_0 }(1)M_{\tau_1 \lambda'}
+  +p_{\tau_7,\sigma w_0 }(1)M_{\tau_1 \lambda'} \\
+ =&M_{\tau_1 \lambda'}
+ + \fcolorbox{red}{white}{$ (1+q)M_{\tau_1 \lambda'}$}
+  +M_{\tau_1 \lambda'} 
+  +M_{\tau_1 \lambda'} 
+  +M_{\tau_1 \lambda'}
+  +M_{\tau_1 \lambda'}
+  +M_{\tau_1 \lambda'}\\
+ =&M_{\tau_1 \lambda'}
+ +\fcolorbox{red}{white}{$2M_{\tau_1 \lambda'}$}
+  +M_{\tau_1 \lambda'} 
+  +M_{\tau_1 \lambda'} 
+  +M_{\tau_1 \lambda'}
+  +M_{\tau_1 \lambda'}
+  +M_{\tau_1 \lambda'}\\
+ =&M_{a,-c,c|-c-1}
+ +\fcolorbox{red}{white}{$2M_{a,-c,-c|-c-1}$}
++M_{a,c,-c|-c-1}
++M_{-c,c,a|-c-1} \\
+  &+M_{-c,a,c|-c-1}
++M_{-c,a,-c|-c-1}
++M_{-c,-c,a|-c-1}
+  \end{split}
+\end{equation*}
+其中,
+\begin{align*}
+  \sigma &= (w3*w1*w2*w3*w1,w_1), \\
+  \tau_1 &= (w2*w3*w1*w2*w3*w2*w1,w1),\\
+  \tau_2 &= (w3*w2*w3*w1*w2*w3*w2*w1,w1),\\
+  \tau_3 &= (w3*w1*w2*w3*w2*w1,w1),\\
+  \tau_4 &= (w3*w1*w2*w3*w1,w1),\\
+  \tau_5 &= (w2*w3*w1*w2*w3*w1,w1),\\
+  \tau_6 &= (w3*w2*w3*w1*w2*w3*w1,w1),\\
+  \tau_7 &= (w3*w2*w3*w1*w2*w3,w1)
+\end{align*}
+
+
+
+\end{example}
+
+
+\section{遇到不能计算的情况一个举例}
+
+因为权的数量巨大, 并不好写, 因此仅举一例:
+
+\begin{example}
+
+  $\lambda = (-\fracc{1},-\fracc{3},\fracc{3}|\fracc{3}), \mu = (\fracc{1},-\fracc{3},\fracc{3}|\fracc{3}) $, 
+  %令$\lambda' =(-\fracc{3},-\fracc{1},-\fracc{1}|-\fracc{5}) $,
+  那么, 首先计算$P_\mu$, 文章P42, 定理4.2.10, (2.4)应该也是有问题的, 跟例\ref{example:2}相似, 正确结果应该是: 
+  \begin{equation*}
+    \begin{split}
+      P_{\mu} =& 
++M_{\fracc{5},\fracc{3},-\fracc{1}|\fracc{5}}
++M_{\fracc{5},\fracc{1},-\fracc{3}|\fracc{5}}
++M_{\fracc{3},\fracc{1},-\fracc{1}|\fracc{1}}
++2M_{\fracc{3},\fracc{3},-\fracc{1}|\fracc{3}}
++M_{\fracc{3},\fracc{1},-\fracc{3}|\fracc{3}} \\
+               &+2M_{\fracc{5},\fracc{3},\fracc{1}|\fracc{5}}
++2M_{\fracc{5},\fracc{1},\fracc{3}|\fracc{5}}
++2M_{\fracc{3},\fracc{1},\fracc{1}|\fracc{1}}
++3M_{\fracc{3},\fracc{3},\fracc{1}|\fracc{3}}
++3M_{\fracc{3},\fracc{1},\fracc{3}|\fracc{3}} \\
+               &+M_{\fracc{5},-\fracc{3},\fracc{1}|\fracc{5}}
++M_{\fracc{5},-\fracc{1},\fracc{3}|\fracc{5}}
++M_{\fracc{3},-\fracc{1},\fracc{1}|\fracc{1}}
++M_{\fracc{3},-\fracc{3},\fracc{1}|\fracc{3}}
++2M_{\fracc{3},-\fracc{1},\fracc{3}|\fracc{3}} \\
+               &+M_{\fracc{3},-\fracc{1},\fracc{5}|\fracc{5}}
++M_{\fracc{1},-\fracc{3},\fracc{5}|\fracc{5}}
++M_{\fracc{1},-\fracc{1},\fracc{3}|\fracc{1}}
++M_{\fracc{1},-\fracc{3},\fracc{3}|\fracc{3}}
++M_{\fracc{3},\fracc{5},-\fracc{1}|\fracc{5}} \\
+               &+M_{\fracc{1},\fracc{5},-\fracc{3}|\fracc{5}}
++M_{\fracc{1},\fracc{3},-\fracc{1}|\fracc{1}}
++M_{\fracc{1},\fracc{3},-\fracc{3}|\fracc{3}}
++M_{\fracc{3},\fracc{5},\fracc{1}|\fracc{5}}
++M_{\fracc{1},\fracc{5},\fracc{3}|\fracc{5}} \\
+               &+M_{\fracc{1},\fracc{3},\fracc{1}|\fracc{1}}
++2M_{\fracc{1},\fracc{3},\fracc{3}|\fracc{3}}
++M_{\fracc{3},\fracc{1},\fracc{5}|\fracc{5}}
++M_{\fracc{1},\fracc{3},\fracc{5}|\fracc{5}}
++M_{\fracc{1},\fracc{1},\fracc{3}|\fracc{1}}
+    \end{split}
+  \end{equation*}
+然后
+\begin{equation*}
+  \begin{split}
+    \prl(P_\mu \otimes S^2V ) =&(96 items) 
++3M_{\fracc{5},\fracc{3},-\fracc{1}|\fracc{5}}
++3M_{\fracc{5},\fracc{3},\fracc{1}|\fracc{5}}
++M_{\fracc{5},\fracc{1},-\fracc{3}|\fracc{5}}
++M_{\fracc{5},-\fracc{1},-\fracc{3}|\fracc{5}}
++3M_{\fracc{3},\fracc{1},-\fracc{1}|\fracc{1}} \\
+                              &+2M_{\fracc{3},-\fracc{1},-\fracc{1}|\fracc{1}}
++4M_{\fracc{3},\fracc{1},\fracc{1}|\fracc{1}}
++M_{\fracc{3},\fracc{1},-\fracc{1}|-\fracc{1}}
++5M_{\fracc{3},\fracc{3},-\fracc{1}|\fracc{3}}
++5M_{\fracc{3},\fracc{3},\fracc{1}|\fracc{3}} \\
+                              &+M_{\fracc{3},\fracc{1},-\fracc{3}|\fracc{3}}
++M_{\fracc{3},-\fracc{1},-\fracc{3}|\fracc{3}}
++3M_{\fracc{5},\fracc{1},\fracc{3}|\fracc{5}}
++3M_{\fracc{5},-\fracc{1},\fracc{3}|\fracc{5}}
++3M_{\fracc{3},-\fracc{1},\fracc{1}|\fracc{1}} \\
+                              &+2M_{\fracc{3},\fracc{1},\fracc{1}|-\fracc{1}}
++5M_{\fracc{3},\fracc{1},\fracc{3}|\fracc{3}}
++5M_{\fracc{3},-\fracc{1},\fracc{3}|\fracc{3}}
++M_{\fracc{5},-\fracc{3},\fracc{1}|\fracc{5}}
++M_{\fracc{5},-\fracc{3},-\fracc{1}|\fracc{5}} \\
+                              &+M_{\fracc{3},-\fracc{1},\fracc{1}|-\fracc{1}}
++M_{\fracc{3},-\fracc{3},\fracc{1}|\fracc{3}}
++M_{\fracc{3},-\fracc{3},-\fracc{1}|\fracc{3}}
++2M_{\fracc{3},-\fracc{1},\fracc{5}|\fracc{5}}
++2M_{\fracc{3},\fracc{1},\fracc{5}|\fracc{5}} \\
+                              &+M_{\fracc{1},-\fracc{3},\fracc{5}|\fracc{5}}
++M_{-\fracc{1},-\fracc{3},\fracc{5}|\fracc{5}}
++2M_{\fracc{1},-\fracc{1},\fracc{3}|\fracc{1}}
++M_{-\fracc{1},-\fracc{1},\fracc{3}|\fracc{1}}
++2M_{\fracc{1},\fracc{1},\fracc{3}|\fracc{1}} \\
+                              &+M_{\fracc{1},-\fracc{1},\fracc{3}|-\fracc{1}}
++M_{\fracc{1},-\fracc{3},\fracc{3}|\fracc{3}}
++M_{-\fracc{1},-\fracc{3},\fracc{3}|\fracc{3}}
++2M_{\fracc{3},\fracc{5},-\fracc{1}|\fracc{5}}
++2M_{\fracc{3},\fracc{5},\fracc{1}|\fracc{5}} \\
+                              &+M_{\fracc{1},\fracc{5},-\fracc{3}|\fracc{5}}
++M_{-\fracc{1},\fracc{5},-\fracc{3}|\fracc{5}}
++2M_{\fracc{1},\fracc{3},-\fracc{1}|\fracc{1}}
++M_{-\fracc{1},\fracc{3},-\fracc{1}|\fracc{1}}
++2M_{\fracc{1},\fracc{3},\fracc{1}|\fracc{1}} \\
+                              &+M_{\fracc{1},\fracc{3},-\fracc{1}|-\fracc{1}}
++M_{\fracc{1},\fracc{3},-\fracc{3}|\fracc{3}}
++M_{-\fracc{1},\fracc{3},-\fracc{3}|\fracc{3}}
++M_{\fracc{1},\fracc{5},\fracc{3}|\fracc{5}}
++M_{-\fracc{1},\fracc{5},\fracc{3}|\fracc{5}} \\
+                              &+M_{-\fracc{1},\fracc{3},\fracc{1}|\fracc{1}}
++M_{\fracc{1},\fracc{3},\fracc{1}|-\fracc{1}}
++2M_{\fracc{1},\fracc{3},\fracc{3}|\fracc{3}}
++2M_{-\fracc{1},\fracc{3},\fracc{3}|\fracc{3}}
++M_{\fracc{1},\fracc{3},\fracc{5}|\fracc{5}} \\
+                              &+M_{-\fracc{1},\fracc{3},\fracc{5}|\fracc{5}}
++M_{-\fracc{1},\fracc{1},\fracc{3}|\fracc{1}}
++M_{\fracc{1},\fracc{1},\fracc{3}|-\fracc{1}}
+  \end{split}
+\end{equation*}
+上面这个结果:
+\begin{equation*}
+  \begin{split}
+\prl(P_\mu \otimes S^2V )
+&=\prl(P_{\fracc{3},-\fracc{3},\fracc{3}|\fracc{3}} ) \otimes g )  
+=\prl(P_{-\fracc{1},-\fracc{3},\fracc{7}|\fracc{3}}) \otimes g ) 
+=\prl(P_{\fracc{1},-\fracc{3},\fracc{5}|\fracc{3}}) \otimes g )  \\
+&=\prl(P_{\fracc{1},-\fracc{3},\fracc{5}|\fracc{3}}) \otimes S^2V )
+=\prl(P_{\fracc{1},-\fracc{3},\fracc{3}|\fracc{3}} ) \otimes V )
+=\prl(P_{-\fracc{1},-\fracc{3},\fracc{5}|\fracc{3}}) \otimes V )
+  \end{split}
+\end{equation*}
+\begin{equation*}
+  \begin{split}
+\prl(P_{-\fracc{1},-\fracc{3},\fracc{5}|\fracc{1}}) \otimes S^2V ) = 
+\prl(P_\mu \otimes S^2V ) + P_{\fracc{1},-\fracc{3},\fracc{3}|-\fracc{3}}
+  \end{split}
+\end{equation*}
+\end{example}
+判断这96项的时候, 我没有判断出来, 主要是不能确定$M_{{\fracc{3},-\fracc{1},\fracc{3}|\fracc{3}}}$重数是4还是5. 注意到
+\begin{equation*}
+  \begin{split}
+    P_{{\fracc{3},-\fracc{1},\fracc{3}|\fracc{3}}} =& 
++M_{\fracc{5},\fracc{1},\fracc{3}|\fracc{5}}
++M_{\fracc{3},\fracc{1},\fracc{5}|\fracc{5}}
++M_{\fracc{3},\fracc{1},\fracc{3}|\fracc{3}}
++M_{\fracc{5},-\fracc{1},\fracc{3}|\fracc{5}}
++M_{\fracc{3},-\fracc{1},\fracc{5}|\fracc{5}} 
++M_{\fracc{3},-\fracc{1},\fracc{3}|\fracc{3}}
++M_{\fracc{5},\fracc{3},\fracc{1}|\fracc{5}} \\
+                                                    &+M_{\fracc{3},\fracc{5},\fracc{1}|\fracc{5}}
++M_{\fracc{3},\fracc{3},\fracc{1}|\fracc{3}}
++M_{\fracc{5},\fracc{3},-\fracc{1}|\fracc{5}}
++M_{\fracc{3},\fracc{5},-\fracc{1}|\fracc{5}}
++M_{\fracc{3},\fracc{3},-\fracc{1}|\fracc{3}}
+  \end{split}
+\end{equation*}
+并不能判断$P_{{\fracc{3},-\fracc{1},\fracc{3}|\fracc{3}}}$在不在$\prl(P_\mu \otimes S^2V )$里面.
+
+
+
+
+%$\lambda = (a,-c,b|b )$
+%
+%\section{$b<c\leq a$}
+%\subsection{$ b+1 < c $}
+%$\prl(P_{a,-c,b+1|b} \otimes V ) = \sum(a,-c,b,b) + \sum(a,-c,b+1,b+1)$
+%\subsection{$ b+1 = c $ $\lambda = (a,b-1,b,b) $}
+%\subsubsection{ $ a>c $}
+%$\prl(P_{a,-b-1,b+1|b} \otimes V ) = \sum(a,-b-1,b,b) + \sum(a,-b-1,b+1,b+1)$
+%\subsubsection{ $ a = c $}
+%
+%$\prl(P_{b+2,-b-1,b+1|b} \otimes V ) = \sum M_(b+2,-b-1,b,b) + \sum M_(b+2,-b-1,b+1,b+1) +\sum M_(b+2,-b-1,b+1,b+2)$
 
 
 \end{document}

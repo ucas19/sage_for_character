@@ -170,7 +170,7 @@ def test_a(nn,mm,typical_lambda_sp,typical_lambda_so,atypical_lambda_sp_plus_so,
     sum_sp_weyl,sum_so_weyl,sum_sp_plus_so = K_L_decompose(W_sp,w_sp,lambda_sp_next, W_so,w_so,lambda_so_next)  
 
     lowest_module = Lowest_Module(n,m)
-    #    print(sum_sp_plus_so)
+    print(sum_sp_plus_so)
     if which_mod ==1:
         P_mu_tensor_V_befor_Pr, P_mu_tensor_V_after_Pr = P_tensor_V(at_lambda_sp_plus_so,sum_sp_plus_so,lowest_module.V,n,m)
     elif which_mod==2:
@@ -373,6 +373,7 @@ if __name__ == "__main__":
         print("9,批量直接计算atypical权集的特征标")
         print("10,慎用,一条龙计算,出发点是一个front文件, 一个behind文件, 一个lam文件")
         print("11,慎用,暴力寻解,计算速度极慢.计算可能能用来计算的权")
+        print("12,文件中的向量转化成latex代码")
 
         while True:
             try:
@@ -380,6 +381,90 @@ if __name__ == "__main__":
                 break  # 如果成功转换为整数，跳出循环
             except ValueError:
                 print("输入无效，请输入一个整数。")
+        if select_case==12:
+            user_input = input("请输入权集合set所在文档的名字:")# 将输入转换为有理数列表并创建向量
+            weight_set = read_vectors_from_file("test//"+user_input+".txt")
+
+            immutable_vecs = [vector(v, immutable=True) for v in weight_set]
+            weight_set_count = Counter(immutable_vecs)
+
+            if len(weight_set)==0:
+                continue
+
+            selects = input("你是否选择替换(回车表示不替换): ")
+
+            if selects =='':
+                for v,k in weight_set_count.items():
+                    str_s = []
+                    for i in range(len(v)):
+                        if v[i]> 0:
+                            str_s.append("\\fracc{"+str(abs(v[i])*2)+"}")
+                        else:
+                            str_s.append("-\\fracc{"+str(abs(v[i])*2)+"}")
+
+                    results = ''
+                    for i in range(n):
+                        results = results + str_s[i] + ','
+                    results = results[:-1] + '|' 
+                    for i in range(m):
+                        results = results + str_s[n+i] + ','
+                    if k > 1:
+                        print( str(k)+"M_{"+results[:-1] +"}")
+                    else:
+                        print( "M_{"+results[:-1] +"}")
+
+            else: 
+                num_tem_dict = {}
+                for i in range(len(weight_set[0])):
+                    num_tem = abs(weight_set[0][i])
+                    if num_tem not in num_tem_dict:
+                        char_c = input(f"{num_tem}代表: ")
+                        if char_c == '':
+                            num_tem_dict[num_tem] = str(num_tem) 
+                            num_tem_dict[-num_tem] = '-'+str(num_tem) 
+                        else:
+                            char_c = ''.join(char_c.split())
+                            if char_c[0] == '+':
+                                char_c = char_c[1:]
+
+                            num_tem_dict[num_tem] = char_c 
+
+                            if len(char_c)==1:
+                                num_tem_dict[-num_tem] = '-'+char_c
+                            elif len(char_c)==2 and char_c[0] == '-':
+                                num_tem_dict[-num_tem] =  char_c[1:]
+                            elif len(char_c)==3 and char_c[1] == '+':
+                                num_tem_dict[-num_tem] = '-'+char_c[0]+'-'+char_c[2]
+                            elif len(char_c)==3 and char_c[1] == '-':
+                                num_tem_dict[-num_tem] = '-'+char_c[0]+'+'+char_c[2]
+                            elif len(char_c)==4 and char_c[0] == '-' and char_c[2] == '+':
+                                num_tem_dict[-num_tem] = char_c[1]+'-'+char_c[3]
+                            elif len(char_c)==4 and char_c[0] == '-' and char_c[2] == '-':
+                                num_tem_dict[-num_tem] = char_c[1]+'+'+char_c[3]
+                
+                for v,k in weight_set_count.items():
+                    str_s = []
+                    for i in range(len(v)):
+                            str_s.append(num_tem_dict[v[i]])
+
+                    results = ''
+                    for i in range(n):
+                        results = results + str_s[i] + ','
+                    results = results[:-1] + '|' 
+                    for i in range(m):
+                        results = results + str_s[n+i] + ','
+                    if k > 1:
+                        print(str(k)+"M_{"+results[:-1] +"}")
+                    else:
+                        print("M_{"+results[:-1] +"}")
+                        
+
+                            
+
+
+
+
+
 
         if select_case==1:
             user_input = input("请输入文档的名字:")# 将输入转换为有理数列表并创建向量
