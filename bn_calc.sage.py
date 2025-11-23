@@ -367,6 +367,7 @@ if __name__ == "__main__":
     while True:
         print("*******开始计算***********************************")
         print("你想要做什么？")
+        print("0,测试")
         print("1,直接计算")
         print("2,计算K_L分解")
         print("3,知道P,计算P_tensor_W并投射到块lambda")
@@ -386,6 +387,12 @@ if __name__ == "__main__":
                 break  # 如果成功转换为整数，跳出循环
             except ValueError:
                 print("输入无效，请输入一个整数。")
+        if select_case==_sage_const_0 :
+            lowest_module = Lowest_Module(n,m)
+            print(f"测试:{len(lowest_module.S3V)}")
+            
+
+
         if select_case==_sage_const_12 :
             user_input = input("请输入权集合set所在文档的名字:")# 将输入转换为有理数列表并创建向量
             weight_set = read_vectors_from_file("test//"+user_input+".txt")

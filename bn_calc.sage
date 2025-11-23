@@ -108,6 +108,8 @@ def again_calc(L_sp_so_next,P_after,which_mod,n,m):
         P_mu_tensor_V_befor_Pr, P_mu_tensor_V_after_Pr = P_tensor_V(lambda_sp_plus_so,sum_sp_plus_so,lowest_module.S2V,n,m)
     elif which_mod==3:
         P_mu_tensor_V_befor_Pr, P_mu_tensor_V_after_Pr = P_tensor_V(lambda_sp_plus_so,sum_sp_plus_so,lowest_module.g,n,m)
+    elif which_mod==4:
+        P_mu_tensor_V_befor_Pr, P_mu_tensor_V_after_Pr = P_tensor_V(lambda_sp_plus_so,sum_sp_plus_so,lowest_module.S3V,n,m)
     else:
         print("---------输入有误---------")
         
@@ -177,6 +179,8 @@ def test_a(nn,mm,typical_lambda_sp,typical_lambda_so,atypical_lambda_sp_plus_so,
         P_mu_tensor_V_befor_Pr, P_mu_tensor_V_after_Pr = P_tensor_V(at_lambda_sp_plus_so,sum_sp_plus_so,lowest_module.S2V,n,m)
     elif which_mod==3:
         P_mu_tensor_V_befor_Pr, P_mu_tensor_V_after_Pr = P_tensor_V(at_lambda_sp_plus_so,sum_sp_plus_so,lowest_module.g,n,m)
+    elif which_mod==4:
+        P_mu_tensor_V_befor_Pr, P_mu_tensor_V_after_Pr = P_tensor_V(lambda_sp_plus_so,sum_sp_plus_so,lowest_module.S3V,n,m)
     else:
         print("--------输入错误----------")
     flag = 0
@@ -233,6 +237,7 @@ def find_path_vector( lam, n, m , which_mod):
     lam_so = lam[n:]
     results_V = []
     results_S2V = []
+    results_S3V = []
     results_g = []
 
 
@@ -304,7 +309,30 @@ def find_path_vector( lam, n, m , which_mod):
                     if is_tensor_V_true_not_show(lam,P_mu_tensor_V_after_Pr, lowest_module.basis_plus):
                         results_g.append(at_lambda_sp_plus_so)
 
-    return results_V, results_S2V, results_g
+    if which_mod ==4:
+        for w_sp in W_sp.W:
+            for w_so in W_so.W:
+                lam_sp_after = w_sp.to_matrix() * lam_sp
+                lam_so_after = w_so.to_matrix() * lam_so
+                sp_plus_so = vector(QQ, list(lam_sp_after)+list(lam_so_after))
+                for v in lowest_module.S3V:
+                    at_lambda_sp_plus_so = v + sp_plus_so
+ #                   print(f"test: {test}")
+                    at_lambda_sp_plus_so_hash = tuple(at_lambda_sp_plus_so) 
+                    if at_lambda_sp_plus_so_hash in anti_repeat_vectors_hash:
+                        continue
+                    anti_repeat_vectors_hash.append(at_lambda_sp_plus_so_hash)
+    
+                    lambda_judge_hash, lambda_judge = judge_mu_in_P(at_lambda_sp_plus_so,n,m,8)
+                    P_vectors = []
+                    for result_ju in lambda_judge:
+                        P_vectors.append(result_ju.result)
+    
+                    P_mu_tensor_V_befor_Pr, P_mu_tensor_V_after_Pr = P_tensor_V_not_show(lam, P_vectors,lowest_module.S3V,n,m)
+                    if is_tensor_V_true_not_show(lam,P_mu_tensor_V_after_Pr, lowest_module.basis_plus):
+                        results_S3V.append(at_lambda_sp_plus_so)
+
+    return results_V, results_S2V, results_g, results_S3V
 
 
 def deal_with_typi_ten(again_lam, P_weights, which_mod , n, m ):
@@ -362,6 +390,7 @@ if __name__ == "__main__":
     while True:
         print("*******开始计算***********************************")
         print("你想要做什么？")
+        print("0,测试")
         print("1,直接计算")
         print("2,计算K_L分解")
         print("3,知道P,计算P_tensor_W并投射到块lambda")
@@ -381,6 +410,12 @@ if __name__ == "__main__":
                 break  # 如果成功转换为整数，跳出循环
             except ValueError:
                 print("输入无效，请输入一个整数。")
+        if select_case==0:
+            lowest_module = Lowest_Module(n,m)
+            print(f"测试:{len(lowest_module.S3V)}")
+            
+
+
         if select_case==12:
             user_input = input("请输入权集合set所在文档的名字:")# 将输入转换为有理数列表并创建向量
             weight_set = read_vectors_from_file("test//"+user_input+".txt")
@@ -488,6 +523,8 @@ if __name__ == "__main__":
                 print("使用模:S2V")# 将输入转换为有理数列表并创建向量
             elif which_mod==3:
                 print("使用模:g")# 将输入转换为有理数列表并创建向量
+            elif which_mod==4:
+                print("使用模:S3V")# 将输入转换为有理数列表并创建向量
             typical_lambda_sp = typical_lambda_sp_plus_so[:n]
             typical_lambda_so = typical_lambda_sp_plus_so[-m:]
             test_a(n,m,typical_lambda_sp,typical_lambda_so, atypical_lambda_sp_plus_so,which_mod)
@@ -522,6 +559,8 @@ if __name__ == "__main__":
                 print("使用模:S2V")# 将输入转换为有理数列表并创建向量
             elif which_mod==3:
                 print("使用模:g")# 将输入转换为有理数列表并创建向量
+            elif which_mod==4:
+                print("使用模:S3V")# 将输入转换为有理数列表并创建向量
             P_mu_tensor_V_after_Pr = again_calc(again_lam,P_mu_tensor_V_after_Pr,which_mod,n,m)
         elif select_case==4:
             user_input = input("请输入权集合set所在文档的名字:")# 将输入转换为有理数列表并创建向量
@@ -579,6 +618,8 @@ if __name__ == "__main__":
             elif which_mod==3:
                 print("使用模:g")# 将输入转换为有理数列表并创建向量
                 P_tensor_V_show(P_mu_tensor_V_after_Pr,3,n,m)
+                print("使用模:S3V")# 将输入转换为有理数列表并创建向量
+                P_tensor_V_show(P_mu_tensor_V_after_Pr,4,n,m)
 
         elif select_case==8:
             user_input = input("请输入权集所在文档的名字:")# 将输入转换为有理数列表并创建向量
@@ -678,6 +719,8 @@ if __name__ == "__main__":
                 print("使用模:S2V")# 将输入转换为有理数列表并创建向量
             elif which_mod==3:
                 print("使用模:g")# 将输入转换为有理数列表并创建向量
+            elif which_mod==4:
+                print("使用模:S3V")# 将输入转换为有理数列表并创建向量
 
             results_ten = []
             for lam in lam_s:
@@ -744,7 +787,7 @@ if __name__ == "__main__":
                 except ValueError:
                     print("输入无效，请输入一个整数。")
             print(f"which_mod: {which_mod}")
-            results_V, results_S2V, results_g = find_path_vector( atypical_lambda_sp_plus_so, n, m,which_mod )
+            results_V, results_S2V, results_g,results_S3V = find_path_vector( atypical_lambda_sp_plus_so, n, m,which_mod )
             print(f"结果如下 V:")
             results = []
             if which_mod ==1:
@@ -753,6 +796,8 @@ if __name__ == "__main__":
                 results = results_S2V
             elif which_mod ==3:
                 results = results_g
+            elif which_mod ==4:
+                results = results_S3V
 
             count = 1
             for v in results:

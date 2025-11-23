@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999997 (TeX Live 2026/dev/Arch Linux) (preloaded format=xelatex 2025.11.12)  15 NOV 2025 16:13
+This is XeTeX, Version 3.141592653-2.6-0.999997 (TeX Live 2026/dev/Arch Linux) (preloaded format=xelatex 2025.11.12)  15 NOV 2025 16:33
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -582,11 +582,30 @@ LaTeX Font Info:    Overwriting math alphabet `\mathsf' in version `bold'
 (Font)                  OT1/cmss/bx/n --> TU/lmss/b/n on input line 63.
 LaTeX Font Info:    Overwriting math alphabet `\mathtt' in version `bold'
 (Font)                  OT1/cmtt/m/n --> TU/lmtt/b/n on input line 63.
-LaTeX Font Info:    Trying to load font information for U+msa on input line 70.
+
+Package fontspec Info: 
+(fontspec)             Script 'CJK' not explicitly supported within font
+(fontspec)             'FandolFang-Regular'. Check the typeset output, and if
+(fontspec)             it is okay then ignore this warning. Otherwise a
+(fontspec)             different font should be chosen.
+
+
+Package fontspec Info: 
+(fontspec)             Font family 'FandolFang-Regular(0)' created for font
+(fontspec)             'FandolFang-Regular' with options
+(fontspec)             [Script={CJK},Extension={.otf}].
+(fontspec)              
+(fontspec)              This font family consists of the following NFSS
+(fontspec)             series/shapes:
+(fontspec)              
+(fontspec)             - 'normal' (m/n) with NFSS spec.:
+(fontspec)             <->"[FandolFang-Regular.otf]/OT:script=hani;language=dflt;"
+
+LaTeX Font Info:    Trying to load font information for U+msa on input line 68.
 (/usr/share/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Trying to load font information for U+msb on input line 70.
+LaTeX Font Info:    Trying to load font information for U+msb on input line 68.
  (/usr/share/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
@@ -604,12 +623,12 @@ L3 programming layer <2022/07/14>
  ***********
  ) 
 Here is how much of TeX's memory you used:
- 16507 strings out of 474637
- 338593 string characters out of 5755872
- 846860 words of memory out of 5000000
- 39279 multiletter control sequences out of 15000+600000
- 565086 words of font info for 75 fonts, out of 8000000 for 9000
+ 16522 strings out of 474637
+ 339021 string characters out of 5755872
+ 848860 words of memory out of 5000000
+ 39288 multiletter control sequences out of 15000+600000
+ 565118 words of font info for 79 fonts, out of 8000000 for 9000
  932 hyphenation exceptions out of 8191
  93i,21n,112p,544b,505s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
-Output written on article.xdv (3 pages, 50624 bytes).
+Output written on article.xdv (3 pages, 52436 bytes).
