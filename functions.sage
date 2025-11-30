@@ -252,11 +252,17 @@ def P_tensor_V_not_show(lambda_sp_plus_so,sum_sp_plus_so,V,n,m):
 
 
 def which_one_lowest(P_mu_tensor_V_after_Pr, basis_plus):
+
     
+    vector_sets = P_mu_tensor_V_after_Pr[:]
     show_P_mu = []
-    for lambda_sp_plus_so in P_mu_tensor_V_after_Pr:
+    not_result = []
+
+    for lambda_sp_plus_so in vector_sets:
+        if lambda_sp_plus_so in not_result:
+            continue
         flag = True
-        for v in P_mu_tensor_V_after_Pr:   
+        for v in vector_sets:   
             result, coefficients = is_nonnegative_integer_combination_sage(lambda_sp_plus_so-v, basis_plus)
             if result:
                 flag = False
@@ -264,6 +270,12 @@ def which_one_lowest(P_mu_tensor_V_after_Pr, basis_plus):
 #                print(f"测试2-{v}")
 #                print(f"测试3-{coefficients}")
                 break
+            
+            result, coefficients = is_nonnegative_integer_combination_sage(v-lambda_sp_plus_so, basis_plus)
+            if result:
+                if v not in not_result:
+                    not_result.append(v)
+
         if flag:   
             show_P_mu.append(lambda_sp_plus_so)
     return show_P_mu
@@ -398,7 +410,35 @@ def is_tensor_V_true_not_show(lambda_sp_plus_so, P_mu_tensor_V_after_Pr, basis_p
 
 
 
+def test_kl(n):
 
+
+    W_sp = Weyl_Group_Bn(n)
+
+    R.<q> = LaurentPolynomialRing(QQ)
+    KL_sp = KazhdanLusztigPolynomial(W_sp.W, q)
+    
+    print("111111")
+    print("验证是否都是1")
+    for rep1 in W_sp.W:
+        for rep2 in W_sp.W:
+        #        print(f"这里是rep--{rep}")
+            if rep1.bruhat_le(rep2):
+
+                k_l_poly = KL_sp.P(rep1,rep2)
+                k_l_on_one=k_l_poly(1)
+                if not k_l_on_one == 1:
+                    print(f"不是1:{rep1},{rep2}")
+    print("222222")
+    print("验证是否都是0")
+    for rep1 in W_sp.W:
+        for rep2 in W_sp.W:
+            if rep2.bruhat_le(rep1) and not rep1 == rep2:
+
+                k_l_poly = KL_sp.P(rep1,rep2)
+                k_l_on_one=k_l_poly(1)
+                if not k_l_on_one == 0:
+                    print(f"不是2:{rep1},{rep2}={k_l_on_one}")
 
 
 def K_L_decompose_no_kl(W_sp,w_sp, lambda_sp_next, W_so, w_so, lambda_so_next):

@@ -4,6 +4,7 @@ from typing import Counter
 #from functions import is_tensor_V_true
 #from functions import is_tensor_V_true_not_show
 from weyl_group_Bn import Weyl_Group_Bn
+from sage_vector_store import SageVectorGroupStore
 from sage.groups.perm_gps.permgroup_named import SymmetricGroup
 from sage.rings.rational_field import QQ
 from lowest_module import Lowest_Module
@@ -20,6 +21,19 @@ def contains_with_counts(A, B):
     count_A = Counter(immutable_vecs_A)
     count_B = Counter(immutable_vecs_B)
     return all(count_A[x] >= count_B[x] for x in count_B)
+
+
+
+
+def zhengli(sum_sp_plus_so):
+    immutable_vecs = [vector(v, immutable=True) for v in sum_sp_plus_so]
+    sum_sp_plus_so_count = Counter(immutable_vecs)
+    count=1
+    print("----------统计如下----------")
+    for v,n in sum_sp_plus_so_count.items():
+        print(f"{count}: {v} 数量{n}")
+        count +=1
+
 
 def test_K_L(nn,mm,L_sp,L_so,flag=0):
     n = nn
@@ -61,12 +75,10 @@ def test_K_L(nn,mm,L_sp,L_so,flag=0):
 def show_kl_comps(P_mu_tensor_V_after_Pr,n,m):
     lowest_module = Lowest_Module(n,m)
     weight_set = P_mu_tensor_V_after_Pr[:]
-    result = []
+    result = weight_set[:]
     result_low = []
-    flag =1
     i=1
-    while weight_set and flag:
-        result = weight_set[:]
+    while weight_set:
         lowest_weight = which_one_lowest(weight_set,lowest_module.basis_plus)
         lowest_weight_now = lowest_weight[0]
         lambda_sp = lowest_weight_now[:n]
@@ -76,20 +88,26 @@ def show_kl_comps(P_mu_tensor_V_after_Pr,n,m):
         w_sp, lambda_sp_next= calc_w_mu(W_sp,lambda_sp)
         w_so, lambda_so_next= calc_w_mu(W_so,lambda_so)
         sum_sp_weyl,sum_so_weyl,sum_sp_plus_so = K_L_decompose_no_kl(W_sp,w_sp,lambda_sp_next, W_so,w_so,lambda_so_next)  
+
+        flag =1
         for v in sum_sp_plus_so:
-            if v in weight_set:
-                weight_set.remove(v)
-            else:
+            if v not in weight_set:
                 flag = 0
+
         if flag:
             result_low.append(lowest_weight_now)
             print(f"第{i}个缩写: {lowest_weight_now}")
             i += 1
             for j in range(len(sum_sp_plus_so)):
                 print(f"{j+1} : {sum_sp_plus_so[j]}")
+                weight_set.remove(sum_sp_plus_so[j])
+                result.remove(sum_sp_plus_so[j])
+        else:
+            weight_set.remove(lowest_weight_now)
 
 
-
+    print("还剩下:")
+    zhengli(result)
 
 
 
@@ -256,17 +274,6 @@ def test_a(nn,mm,typical_lambda_sp,typical_lambda_so,atypical_lambda_sp_plus_so,
         print(f"{calc_sum}: {result_ju.result}")
         calc_sum +=1
 
-
-
-
-def zhengli(sum_sp_plus_so):
-    immutable_vecs = [vector(v, immutable=True) for v in sum_sp_plus_so]
-    sum_sp_plus_so_count = Counter(immutable_vecs)
-    count=1
-    print("----------统计如下----------")
-    for v,n in sum_sp_plus_so_count.items():
-        print(f"{count}: {v} 数量{n}")
-        count +=1
 
 
 def find_path_vector( lam, n, m , which_mod):
@@ -439,9 +446,11 @@ if __name__ == "__main__":
     lambda_so = vector(QQ,[1/2])
     lambda_sp_plus_so = vector(QQ, [1/2,1/2,1/2])
     lambda_sp_plus_so_next = vector(QQ,[-1/2,1/2,1/2])
+
     
-    n=3 
-    m=1
+    store = SageVectorGroupStore('my_vectors.db')
+    n=2 
+    m=2
     while True:
         print("*******开始计算***********************************")
         print("你想要做什么？")
@@ -458,6 +467,7 @@ if __name__ == "__main__":
         print("10,慎用,一条龙计算,出发点是一个front文件, 一个behind文件, 一个lam文件")
         print("11,慎用,暴力寻解,计算速度极慢.计算可能能用来计算的权")
         print("12,文件中的向量转化成latex代码")
+        print("13,特征标数据库操作")
 
         while True:
             try:
@@ -467,12 +477,74 @@ if __name__ == "__main__":
                 print("输入无效，请输入一个整数。")
         if select_case==0:
             lowest_module = Lowest_Module(n,m)
-            print(f"测试:{len(lowest_module.S3V)}")
-            print(f"测试:{len(lowest_module.S3VV)}")
-            print(f"测试:{len(lowest_module.W3V)}")
+            print(f"测试s3v:{len(lowest_module.S3V)}")
+            print(f"测试s3vv:{len(lowest_module.S3VV)}")
+            print(f"测试w3v:{len(lowest_module.W3V)}")
+            print(f"测试s2v:{len(lowest_module.S2V)}")
+            print(f"测试s2vv:{len(lowest_module.S2VV)}")
+            print(f"测试gV:{len(lowest_module.gV)}")
+            print(f"测试g:{len(lowest_module.g)}")
             tem = vectors_set_min(lowest_module.S3VV,lowest_module.S3V)
             print(tem)
-            
+            tem = vectors_set_min(lowest_module.S2V,lowest_module.S2VV)
+            print(tem)
+            tem = vectors_set_min(lowest_module.g,lowest_module.gV)
+            print(tem)
+            test_kl(n)
+
+        if select_case==13:
+
+            print("1, 查询特征标")
+            print("2, 储存特征标,文件中的向量组转化储存起来备用")
+            print("3, 删除特征标,特征标输入有误")
+            print("4, 列出全部特征标keys")
+
+            while True:
+                try:
+                    sub_select_case = int(input("你的选择是: "))
+                    break  # 如果成功转换为整数，跳出循环
+                except ValueError:
+                    print("输入无效，请输入一个整数。")
+
+            if sub_select_case == 4:
+                store.list_keys()
+
+
+            elif sub_select_case == 3:
+
+                user_input = input("请输入文档的名字:")# 将输入转换为有理数列表并创建向量
+                with open('test//'+user_input+'.txt', 'r') as f:
+                    lines = f.readlines()
+
+                rat_list = [QQ(x.strip()) for x in lines[0].split(',')]
+                key1 = vector(QQ,rat_list)          
+                store.remove_group(key1)
+
+            elif sub_select_case == 2 :
+                user_input = input("请输入权集合set所在文档的名字:")# 将输入转换为有理数列表并创建向量
+                weight_set = read_vectors_from_file("test//"+user_input+".txt")
+                lowest_module = Lowest_Module(n,m)
+                lowest_weight = which_one_lowest(weight_set,lowest_module.basis_plus)
+                if not len(lowest_weight) == 1:
+                    print("特征标权集有误！")
+                    continue
+                else:
+                    print(f"即将储存特征标:{lowest_weight[0]}")
+                    try:
+                        store.add_group(lowest_weight[0], weight_set)
+                    except ValueError as e:
+                        print(e)  # Key vector ... already exists
+            elif sub_select_case == 1:
+
+                user_input = input("请输入文档的名字:")# 将输入转换为有理数列表并创建向量
+                with open('test//'+user_input+'.txt', 'r') as f:
+                    lines = f.readlines()
+
+                rat_list = [QQ(x.strip()) for x in lines[0].split(',')]
+                key1 = vector(QQ,rat_list)          
+                
+                retrieved = store.get_group(key1)
+                print(retrieved)  # [ (1, 0), (0, 1, 1/2) ]
 
 
         if select_case==12:
@@ -629,6 +701,11 @@ if __name__ == "__main__":
             user_input = input("请输入权集合set所在文档的名字:")# 将输入转换为有理数列表并创建向量
             weight_set = read_vectors_from_file("test//"+user_input+".txt")
             lowest_module = Lowest_Module(n,m)
+            print(f"1:完整权集大小排序")
+            print(f"2:仅计算最小权")
+            user_input = input("我的选择:")# 将输入转换为有理数列表并创建向量
+            if user_input == '' or user_input =='2':
+                continue
             cases = 1
 
             while weight_set:
@@ -669,7 +746,7 @@ if __name__ == "__main__":
                 
             P_mu_tensor_V_after_Pr = read_vectors_from_file("test//"+user_input+".txt")
             
-            user_input_W = input("请输入模1，2，3，4:  ")# 将输入转换为有理数列表并创建向量
+            user_input_W = input("请输入模1，2，3，4，5:  ")# 将输入转换为有理数列表并创建向量
 
             which_mod = int(user_input_W)
             if which_mod ==1:
