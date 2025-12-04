@@ -337,6 +337,7 @@ def P_tensor_V_show(sum_sp_plus_so,which_mod,n,m):
         lowest_weights = which_one_lowest(group,lowest_module.basis_plus)
         for i in range(len(lowest_weights)):
             print(f"{i+1}: {lowest_weights[i]}")
+    return select
 
 
 def is_tensor_V_true(lambda_sp_plus_so, P_mu_tensor_V_after_Pr, basis_plus):
@@ -840,10 +841,27 @@ def show_steps(v,lambda_judge):
 
 
 def vectors_set_min(vector_set,vectors_set_min):
+    vector_set_tem = vector_set[:]
     for v in vectors_set_min:
         try:
-            vector_set.remove(v)
+            vector_set_tem.remove(v)
         except ValueError:
             print(f"元素 {v} 不在列表中，无法移除")
             return None
-    return vector_set
+    return vector_set_tem
+
+
+def calc_typi_vec(typical_lambda_sp_plus_so,n,m):
+
+    t_lambda_sp = typical_lambda_sp_plus_so[:n]
+    t_lambda_so = typical_lambda_sp_plus_so[n:]
+    print(f"typical的lambda是: {typical_lambda_sp_plus_so}")
+    
+    W_sp = Weyl_Group_Bn(n)
+    W_so = Weyl_Group_Bn(m)
+    
+    w_sp, lambda_sp_next= calc_w_mu(W_sp,t_lambda_sp)
+    w_so, lambda_so_next= calc_w_mu(W_so,t_lambda_so)
+
+    sum_sp_weyl,sum_so_weyl,sum_sp_plus_so = K_L_decompose(W_sp,w_sp,lambda_sp_next, W_so,w_so,lambda_so_next)  
+    return sum_sp_weyl,sum_so_weyl,sum_sp_plus_so
