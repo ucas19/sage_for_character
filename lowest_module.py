@@ -113,6 +113,15 @@ def sym_2( n, m):
 
     return result
 
+def vectors_set_min_2(vector_set,vectors_set_min):
+    vector_set_tem = vector_set[:]
+    for v in vectors_set_min:
+        try:
+            vector_set_tem.remove(v)
+        except ValueError:
+            print(f"元素 {v} 不在列表中，无法移除")
+            return None
+    return vector_set_tem
 
 def wedge_2( n, m):
     V_0 = []
@@ -257,8 +266,11 @@ class Lowest_Module:
         self.S2VV = sym_2(n,m)
         self.gV = wedge_2(n,m)
         self.S3V = []
+        self.Q_S3V = []
+        self.Q_W3V = []
         self.W3V = wedge_3(n,m)
         self.S3VV = sym_3(n,m)
+
         self.basis_plus = []
         
         for i in range(n+m-1):
@@ -516,6 +528,17 @@ class Lowest_Module:
                                 self.S3V.append(v[:])
 
 
+        tem = []
+        for v in self.V:
+            for w in self.gV:
+                tem.append(v+w)
+                
+        self.Q_W3V = vectors_set_min_2(tem,self.W3V)
 
 
-        
+        tem = []
+        for v in self.V:
+            for w in self.S2V:
+                tem.append(v+w)
+
+        self.Q_S3V = vectors_set_min_2(tem,self.S3V)
