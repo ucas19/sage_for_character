@@ -304,24 +304,24 @@ def selete_block(P_mu_tensor_V_befor_Pr,n,m):
 def P_tensor_V_show(sum_sp_plus_so,which_mod,n,m):
     
     lowest_module = Lowest_Module(n,m)
-    V = []
-    if which_mod ==1:
-        V = lowest_module.V
-    elif which_mod ==2:
-        V = lowest_module.S2V
-    elif which_mod ==3:
-        V = lowest_module.g
-    elif which_mod ==4:
-        V = lowest_module.S3V
-    elif which_mod ==5:
-        V = lowest_module.W3V
-    elif which_mod ==6:
-        V = lowest_module.Q_S3V
-    elif which_mod ==7:
-        V = lowest_module.Q_W3V
-    else:
-        print("输入有误")
-
+    V = lowest_module.get_module(which_mod)
+#    if which_mod ==1:
+#        V = lowest_module.V
+#    elif which_mod ==2:
+#        V = lowest_module.S2V
+#    elif which_mod ==3:
+#        V = lowest_module.g
+#    elif which_mod ==4:
+#        V = lowest_module.S3V
+#    elif which_mod ==5:
+#        V = lowest_module.W3V
+#    elif which_mod ==6:
+#        V = lowest_module.Q_S3V
+#    elif which_mod ==7:
+#        V = lowest_module.Q_W3V
+#    else:
+#        print("输入有误")
+#
     print("P_mu_tensor_V如下:")
     P_mu_tensor_V_befor_Pr = []
     calc_sum = 0

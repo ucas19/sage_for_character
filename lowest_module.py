@@ -76,26 +76,11 @@ def check_arrays(A, B, n, m):
     return False
 
 
-def sym_2( n, m):
-    V_0 = []
-    V_1 = []
-    result = []
-    v = zero_vector(QQ, n+m)
-    V_0.append(v[:])
-    for i in range(m):
-        v = zero_vector(QQ, n+m)
-        v[n+i] = 1
-        V_0.append(v[:])
-        v[n+i] = -1
-        V_0.append(v[:])
 
-    for i in range(n):
-        v = zero_vector(QQ, n+m)
-        v[i] = 1
-        V_1.append(v[:])
-        v[i] = -1
-        V_1.append(v[:])
-    
+
+
+def sym_2( n, m,V_0,V_1):
+    result = []
     for i in range(len(V_1)):
         for j in range(i+1,len(V_1)):
             tem = V_1[i]+V_1[j]
@@ -113,36 +98,9 @@ def sym_2( n, m):
 
     return result
 
-def vectors_set_min_2(vector_set,vectors_set_min):
-    vector_set_tem = vector_set[:]
-    for v in vectors_set_min:
-        try:
-            vector_set_tem.remove(v)
-        except ValueError:
-            print(f"元素 {v} 不在列表中，无法移除")
-            return None
-    return vector_set_tem
 
-def wedge_2( n, m):
-    V_0 = []
-    V_1 = []
+def wedge_2( n, m,V_0,V_1):
     result = []
-    v = zero_vector(QQ, n+m)
-    V_0.append(v[:])
-    for i in range(m):
-        v = zero_vector(QQ, n+m)
-        v[n+i] = 1
-        V_0.append(v[:])
-        v[n+i] = -1
-        V_0.append(v[:])
-
-    for i in range(n):
-        v = zero_vector(QQ, n+m)
-        v[i] = 1
-        V_1.append(v[:])
-        v[i] = -1
-        V_1.append(v[:])
-    
     for i in range(len(V_0)):
         for j in range(i+1,len(V_0)):
             tem = V_0[i]+V_0[j]
@@ -160,27 +118,8 @@ def wedge_2( n, m):
 
     return result
 
-def sym_3( n, m):
-
-    V_0 = []
-    V_1 = []
+def sym_3( n, m,V_0,V_1):
     result = []
-    v = zero_vector(QQ, n+m)
-    V_0.append(v[:])
-    for i in range(m):
-        v = zero_vector(QQ, n+m)
-        v[n+i] = 1
-        V_0.append(v[:])
-        v[n+i] = -1
-        V_0.append(v[:])
-
-    for i in range(n):
-        v = zero_vector(QQ, n+m)
-        v[i] = 1
-        V_1.append(v[:])
-        v[i] = -1
-        V_1.append(v[:])
-    
     for i in range(len(V_1)):
         for j in range(i+1,len(V_1)):
             for k in range(j+1,len(V_1)):
@@ -206,27 +145,9 @@ def sym_3( n, m):
                 result.append(tem[:])
     return result
 
-def wedge_3( n, m):
-
-    V_0 = []
-    V_1 = []
-    result = []
-    v = zero_vector(QQ, n+m)
-    V_0.append(v[:])
-    for i in range(m):
-        v = zero_vector(QQ, n+m)
-        v[n+i] = 1
-        V_0.append(v[:])
-        v[n+i] = -1
-        V_0.append(v[:])
-
-    for i in range(n):
-        v = zero_vector(QQ, n+m)
-        v[i] = 1
-        V_1.append(v[:])
-        v[i] = -1
-        V_1.append(v[:])
+def wedge_3( n, m,V_0,V_1):
     
+    result = []
     for i in range(len(V_0)):
         for j in range(i+1,len(V_0)):
             for k in range(j+1,len(V_0)):
@@ -255,21 +176,321 @@ def wedge_3( n, m):
 
 
 
+def wedge_4( n, m,V_0,V_1):
+    
+    result = []
+    for i in range(len(V_0)):
+        for j in range(i+1,len(V_0)):
+            for k in range(j+1,len(V_0)):
+                for l in range(k+1,len(V_0)):
+                    tem = V_0[i]+V_0[j]+V_0[k]+V_0[l]
+                    result.append(tem[:])
+
+    for i in range(len(V_0)):
+        for j in range(i+1,len(V_0)):
+            for l in range(j+1,len(V_0)):
+                for k in range(len(V_1)):
+                    tem = V_0[i]+V_0[j]+V_0[l]+V_1[k]
+                    result.append(tem[:])
+
+
+    for i in range(len(V_1)):
+        for j in range(i,len(V_1)):
+            for k in range(len(V_0)):
+                for l in range(k+1,len(V_0)):
+                    tem = V_1[i]+V_1[j]+V_0[k]+V_0[l]
+                    result.append(tem[:])
+
+    for i in range(len(V_1)):
+        for j in range(i,len(V_1)):
+            for k in range(j,len(V_1)):
+                for l in range(len(V_0)):
+                    tem = V_1[i]+V_1[j]+V_1[k]+V_0[l]
+                    result.append(tem[:])
+
+    for i in range(len(V_1)):
+        for j in range(i,len(V_1)):
+            for k in range(j,len(V_1)):
+                for l in range(k,len(V_1)):
+                    tem = V_1[i]+V_1[j]+V_1[k]+V_1[l]
+                    result.append(tem[:])
+    return result
+
+
+def sym_4( n, m,V_0,V_1):
+    
+    result = []
+    for i in range(len(V_1)):
+        for j in range(i+1,len(V_1)):
+            for k in range(j+1,len(V_1)):
+                for l in range(k+1,len(V_1)):
+                    tem = V_1[i]+V_1[j]+V_1[k]+V_1[l]
+                    result.append(tem[:])
+
+    for i in range(len(V_1)):
+        for j in range(i+1,len(V_1)):
+            for l in range(j+1,len(V_1)):
+                for k in range(len(V_0)):
+                    tem = V_1[i]+V_1[j]+V_1[l]+V_0[k]
+                    result.append(tem[:])
+
+
+    for i in range(len(V_0)):
+        for j in range(i,len(V_0)):
+            for k in range(len(V_1)):
+                for l in range(k+1,len(V_1)):
+                    tem = V_0[i]+V_0[j]+V_1[k]+V_1[l]
+                    result.append(tem[:])
+
+    for i in range(len(V_0)):
+        for j in range(i,len(V_0)):
+            for k in range(j,len(V_0)):
+                for l in range(len(V_1)):
+                    tem = V_0[i]+V_0[j]+V_0[k]+V_1[l]
+                    result.append(tem[:])
+
+    for i in range(len(V_0)):
+        for j in range(i,len(V_0)):
+            for k in range(j,len(V_0)):
+                for l in range(k,len(V_0)):
+                    tem = V_0[i]+V_0[j]+V_0[k]+V_0[l]
+                    result.append(tem[:])
+    return result
+
+
+
+
+
+
+
+
+
+
+
+#def sym_2( n, m):
+#    V_0 = []
+#    V_1 = []
+#    result = []
+#    v = zero_vector(QQ, n+m)
+#    V_0.append(v[:])
+#    for i in range(m):
+#        v = zero_vector(QQ, n+m)
+#        v[n+i] = 1
+#        V_0.append(v[:])
+#        v[n+i] = -1
+#        V_0.append(v[:])
+#
+#    for i in range(n):
+#        v = zero_vector(QQ, n+m)
+#        v[i] = 1
+#        V_1.append(v[:])
+#        v[i] = -1
+#        V_1.append(v[:])
+#    
+#    for i in range(len(V_1)):
+#        for j in range(i+1,len(V_1)):
+#            tem = V_1[i]+V_1[j]
+#            result.append(tem[:])
+#
+#    for i in range(len(V_1)):
+#        for k in range(len(V_0)):
+#            tem = V_1[i]+V_0[k]
+#            result.append(tem[:])
+#
+#    for i in range(len(V_0)):
+#        for j in range(i,len(V_0)):
+#            tem = V_0[i]+V_0[j]
+#            result.append(tem[:])
+#
+#    return result
+#
+def vectors_set_min_2(vector_set,vectors_set_min):
+    vector_set_tem = vector_set[:]
+    for v in vectors_set_min:
+        try:
+            vector_set_tem.remove(v)
+        except ValueError:
+            print(f"元素 {v} 不在列表中，无法移除")
+            return None
+    return vector_set_tem
+#
+#def wedge_2( n, m):
+#    V_0 = []
+#    V_1 = []
+#    result = []
+#    v = zero_vector(QQ, n+m)
+#    V_0.append(v[:])
+#    for i in range(m):
+#        v = zero_vector(QQ, n+m)
+#        v[n+i] = 1
+#        V_0.append(v[:])
+#        v[n+i] = -1
+#        V_0.append(v[:])
+#
+#    for i in range(n):
+#        v = zero_vector(QQ, n+m)
+#        v[i] = 1
+#        V_1.append(v[:])
+#        v[i] = -1
+#        V_1.append(v[:])
+#    
+#    for i in range(len(V_0)):
+#        for j in range(i+1,len(V_0)):
+#            tem = V_0[i]+V_0[j]
+#            result.append(tem[:])
+#
+#    for i in range(len(V_0)):
+#        for k in range(len(V_1)):
+#            tem = V_0[i]+V_1[k]
+#            result.append(tem[:])
+#
+#    for i in range(len(V_1)):
+#        for j in range(i,len(V_1)):
+#            tem = V_1[i]+V_1[j]
+#            result.append(tem[:])
+#
+#    return result
+#
+#def sym_3( n, m):
+#
+#    V_0 = []
+#    V_1 = []
+#    result = []
+#    v = zero_vector(QQ, n+m)
+#    V_0.append(v[:])
+#    for i in range(m):
+#        v = zero_vector(QQ, n+m)
+#        v[n+i] = 1
+#        V_0.append(v[:])
+#        v[n+i] = -1
+#        V_0.append(v[:])
+#
+#    for i in range(n):
+#        v = zero_vector(QQ, n+m)
+#        v[i] = 1
+#        V_1.append(v[:])
+#        v[i] = -1
+#        V_1.append(v[:])
+#    
+#    for i in range(len(V_1)):
+#        for j in range(i+1,len(V_1)):
+#            for k in range(j+1,len(V_1)):
+#                tem = V_1[i]+V_1[j]+V_1[k]
+#                result.append(tem[:])
+#
+#    for i in range(len(V_1)):
+#        for j in range(i+1,len(V_1)):
+#            for k in range(len(V_0)):
+#                tem = V_1[i]+V_1[j]+V_0[k]
+#                result.append(tem[:])
+#
+#    for i in range(len(V_0)):
+#        for j in range(i,len(V_0)):
+#            for k in range(len(V_1)):
+#                tem = V_0[i]+V_0[j]+V_1[k]
+#                result.append(tem[:])
+#
+#    for i in range(len(V_0)):
+#        for j in range(i,len(V_0)):
+#            for k in range(j,len(V_0)):
+#                tem = V_0[i]+V_0[j]+V_0[k]
+#                result.append(tem[:])
+#    return result
+#
+#def wedge_3( n, m):
+#
+#    V_0 = []
+#    V_1 = []
+#    result = []
+#    v = zero_vector(QQ, n+m)
+#    V_0.append(v[:])
+#    for i in range(m):
+#        v = zero_vector(QQ, n+m)
+#        v[n+i] = 1
+#        V_0.append(v[:])
+#        v[n+i] = -1
+#        V_0.append(v[:])
+#
+#    for i in range(n):
+#        v = zero_vector(QQ, n+m)
+#        v[i] = 1
+#        V_1.append(v[:])
+#        v[i] = -1
+#        V_1.append(v[:])
+#    
+#    for i in range(len(V_0)):
+#        for j in range(i+1,len(V_0)):
+#            for k in range(j+1,len(V_0)):
+#                tem = V_0[i]+V_0[j]+V_0[k]
+#                result.append(tem[:])
+#
+#    for i in range(len(V_0)):
+#        for j in range(i+1,len(V_0)):
+#            for k in range(len(V_1)):
+#                tem = V_0[i]+V_0[j]+V_1[k]
+#                result.append(tem[:])
+#
+#
+#    for i in range(len(V_1)):
+#        for j in range(i,len(V_1)):
+#            for k in range(len(V_0)):
+#                tem = V_1[i]+V_1[j]+V_0[k]
+#                result.append(tem[:])
+#
+#    for i in range(len(V_1)):
+#        for j in range(i,len(V_1)):
+#            for k in range(j,len(V_1)):
+#                tem = V_1[i]+V_1[j]+V_1[k]
+#                result.append(tem[:])
+#    return result
+#
+
+
 
 
 class Lowest_Module:
     
     def __init__(self, n, m):
+
+        self.V_0 = []
+        self.V_1 = []
+        v = zero_vector(QQ, n+m)
+        self.V_0.append(v[:])
+        for i in range(m):
+            v = zero_vector(QQ, n+m)
+            v[n+i] = 1
+            self.V_0.append(v[:])
+            v[n+i] = -1
+            self.V_0.append(v[:])
+    
+        for i in range(n):
+            v = zero_vector(QQ, n+m)
+            v[i] = 1
+            self.V_1.append(v[:])
+            v[i] = -1
+            self.V_1.append(v[:])
+
+
+
         self.V = []
         self.S2V = []
         self.g = []
-        self.S2VV = sym_2(n,m)
-        self.gV = wedge_2(n,m)
+        self.S2VV = sym_2(n,m,self.V_0,self.V_1)
+        self.gV = wedge_2(n,m,self.V_0,self.V_1)
         self.S3V = []
         self.Q_S3V = []
         self.Q_W3V = []
-        self.W3V = wedge_3(n,m)
-        self.S3VV = sym_3(n,m)
+
+        self.Q_3V_TR = []
+
+        self.W3V = wedge_3(n,m,self.V_0,self.V_1)
+        self.S3VV = sym_3(n,m,self.V_0,self.V_1)
+
+        self.Q_S3V = []
+        self.Q_W3V = []
+
+        self.W4V = wedge_4(n,m,self.V_0,self.V_1)
+        self.S4V = sym_4(n,m,self.V_0,self.V_1)
 
         self.basis_plus = []
         
@@ -283,7 +504,7 @@ class Lowest_Module:
         self.basis_plus.append(v[:])
 
 
-
+    
         v = zero_vector(QQ, n+m)
         self.V.append(v[:])
 
@@ -542,3 +763,31 @@ class Lowest_Module:
                 tem.append(v+w)
 
         self.Q_S3V = vectors_set_min_2(tem,self.S3V)
+        self.Q_3V_TR = vectors_set_min_2(self.Q_S3V,self.V)
+
+    
+    def get_module(self,which_mod):
+        if which_mod == 1:
+            return self.V
+        elif which_mod ==2:
+            return self.S2V
+        elif which_mod ==3:
+            return self.gV
+        elif which_mod ==4:
+            return self.S3V
+        elif which_mod ==5:
+            return self.W3V
+        elif which_mod ==6:
+            return self.Q_S3V
+        elif which_mod ==7:
+            return self.Q_W3V
+        elif which_mod ==8:
+            return self.Q_3V_TR
+        elif which_mod ==9:
+            return self.S4V
+        elif which_mod ==10:
+            return self.W4V
+        else:
+            print("get_module错误,没有这个模")
+            return None
+

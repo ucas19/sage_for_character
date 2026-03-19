@@ -1,35 +1,85 @@
-from sage_vector_store import SageVectorGroupStore
-from sage.all import vector, QQ
+# -*- coding: utf-8 -*-
+"""
+计算 Weyl 群 C(5) 最长元素的所有既约表示特征标值
+"""
 
-# 创建存储
-store = SageVectorGroupStore('my_vectors.db')
+def main():
+    print("正在初始化 Weyl 群 C(5)...")
+    
+    # 1. 定义 Weyl 群
+    # C5 和 B5 的 Weyl 群是同构的，Sage 中可以使用 ['C', 5]
+    W = WeylGroup(['C', 5])
+    
+    print(f"群阶: {W.cardinality()}")
+    print(f"群生成元个数: {W.ngens()}")
+    
+    # 2. 获取最长元素 (Longest element)
+    w0 = W.long_element()
+    print(f"最长元素: {w0}")
+    print(f"最长元素长度: {w0.length()}")
+    
+    # 3. 获取特征标表
+    # 注意：对于阶数为 3840 的群，计算特征标表可能需要几秒钟
+    print("\n正在计算特征标表 (这可能需要一点时间)...")
+    char_table = W.character_table()
+    
+    # 特征标表的行对应既约表示，列对应共轭类
+    # 我们需要找到最长元素 w0 所在的共轭类索引
+    
+    # 获取所有共轭类代表元
+    conjugacy_classes = W.conjugacy_classes()
+    
+    # 找到 w0 所属的共轭类索引
+    w0_class_index = -1
+    for i, cc in enumerate(conjugacy_classes):
+        if w0 in cc:
+            w0_class_index = i
+            break
+            
+    if w0_class_index == -1:
+        print("错误：未找到最长元素所在的共轭类。")
+        return
 
-# 定义向量
-key1 = vector(QQ, [1, 2, 3])
-group1 = [
-    vector(QQ, [1, 0]),
-    vector(QQ, [0, 1, 1/2])
-]
+    print(f"最长元素位于第 {w0_class_index + 1} 个共轭类 (索引从0开始为 {w0_class_index})")
+    
+    # 4. 提取最长元素在所有既约表示中的特征标值
+    # char_table[i, j] 表示第 i 个既约表示在第 j 个共轭类上的特征标值
+    irreps_values = []
+    
+    num_irreps = char_table.nrows()
+    
+    print(f"\nWeyl 群 C(5) 共有 {num_irreps} 个既约表示。")
+    print(f"最长元素 w0 在各既约表示中的特征标值 (Trace):")
+    print("-" * 50)
+    
+    results = []
+    
+    for i in range(num_irreps):
+        val = char_table[i, w0_class_index]
+        results.append((i, val))
+        # 为了输出整洁，只打印前20个和最后几个，或者全部打印如果数量不多
+        # C5 有几十到上百个既约表示？让我们先全部打印，C5的分割数决定了表示个数
+        # B_n/C_n 的既约表示个数等于有符号分割的数量，或者是相关组合数。
+        # 实际上，W(B_n) 的既约表示个数是 p(n) 的相关变体，对于 n=5，数量是可管理的。
+        # W(B5) 的既约表示个数为 2^5 * p(5) ? 不，是 sum_{k=0 to n} p(k)p(n-k) 这种形式吗？
+        # 准确说是：W(B_n) 的不可约表示由双分割 (bipartitions) of n 参数化。
+        # n=5 的双分割数量是 2^5 * ...? 
+        # 双分割 (lambda, mu) 使得 |lambda| + |mu| = n.
+        # 数量 = sum_{k=0}^5 p(k)*p(5-k). 
+        # p(0)=1, p(1)=1, p(2)=2, p(3)=3, p(4)=5, p(5)=7.
+        # Sum = 1*7 + 1*5 + 2*3 + 3*2 + 5*1 + 7*1 = 7+5+6+6+5+7 = 36.
+        # 所以只有 36 个既约表示，完全可以全部打印。
+        
+    # 重新格式化输出以显示双分割信息（可选，这里仅输出特征标值）
+    for idx, val in results:
+        print(f"既约表示 #{idx:2d}: 特征标值 = {val}")
 
-# 添加
-store.add_group(key1, group1)
+    # 统计特征标值的分布
+    from collections import Counter
+    dist = Counter([v for _, v in results])
+    print("\n特征标值分布统计:")
+    for val, count in sorted(dist.items()):
+        print(f"值 {val:4d}: 出现 {count:2d} 次")
 
-# 检查存在
-print(store.exists(key1))  # True
-
-# 查询
-retrieved = store.get_group(key1)
-print(retrieved)  # [ (1, 0), (0, 1, 1/2) ]
-
-# 尝试重复添加 → 报错
-try:
-    store.add_group(key1, group1)
-except ValueError as e:
-    print(e)  # Key vector ... already exists
-
-# 删除
-store.remove_group(key1)
-print(store.exists(key1))  # False
-
-# 列出所有键（调试用）
-# print(store.list_keys())
+if __name__ == "__main__":
+    main()

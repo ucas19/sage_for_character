@@ -251,23 +251,33 @@ def again_calc(L_sp_so_next,P_after,which_mod,n,m):
     sum_sp_plus_so = P_after[:]
     lowest_module = Lowest_Module(n,m)
 
-    if which_mod ==_sage_const_1 :
-        P_mu_tensor_V_befor_Pr, P_mu_tensor_V_after_Pr = P_tensor_V(lambda_sp_plus_so,sum_sp_plus_so,lowest_module.V,n,m)
-    elif which_mod==_sage_const_2 :
-        P_mu_tensor_V_befor_Pr, P_mu_tensor_V_after_Pr = P_tensor_V(lambda_sp_plus_so,sum_sp_plus_so,lowest_module.S2V,n,m)
-    elif which_mod==_sage_const_3 :
-        P_mu_tensor_V_befor_Pr, P_mu_tensor_V_after_Pr = P_tensor_V(lambda_sp_plus_so,sum_sp_plus_so,lowest_module.g,n,m)
-    elif which_mod==_sage_const_4 :
-        P_mu_tensor_V_befor_Pr, P_mu_tensor_V_after_Pr = P_tensor_V(lambda_sp_plus_so,sum_sp_plus_so,lowest_module.S3V,n,m)
-    elif which_mod==_sage_const_5 :
-        P_mu_tensor_V_befor_Pr, P_mu_tensor_V_after_Pr = P_tensor_V(lambda_sp_plus_so,sum_sp_plus_so,lowest_module.W3V,n,m)
-    elif which_mod==_sage_const_6 :
-        P_mu_tensor_V_befor_Pr, P_mu_tensor_V_after_Pr = P_tensor_V(lambda_sp_plus_so,sum_sp_plus_so,lowest_module.Q_S3V,n,m)
-    elif which_mod==_sage_const_7 :
-        P_mu_tensor_V_befor_Pr, P_mu_tensor_V_after_Pr = P_tensor_V(lambda_sp_plus_so,sum_sp_plus_so,lowest_module.Q_W3V,n,m)
-    else:
-        print("---------输入有误---------")
-        
+
+    P_mu_tensor_V_befor_Pr, P_mu_tensor_V_after_Pr = P_tensor_V(lambda_sp_plus_so,sum_sp_plus_so,lowest_module.get_module(which_mod),n,m)
+
+#    if which_mod ==1:
+#        P_mu_tensor_V_befor_Pr, P_mu_tensor_V_after_Pr = P_tensor_V(lambda_sp_plus_so,sum_sp_plus_so,lowest_module.V,n,m)
+#    elif which_mod==2:
+#        P_mu_tensor_V_befor_Pr, P_mu_tensor_V_after_Pr = P_tensor_V(lambda_sp_plus_so,sum_sp_plus_so,lowest_module.S2V,n,m)
+#    elif which_mod==3:
+#        P_mu_tensor_V_befor_Pr, P_mu_tensor_V_after_Pr = P_tensor_V(lambda_sp_plus_so,sum_sp_plus_so,lowest_module.g,n,m)
+#    elif which_mod==4:
+#        P_mu_tensor_V_befor_Pr, P_mu_tensor_V_after_Pr = P_tensor_V(lambda_sp_plus_so,sum_sp_plus_so,lowest_module.S3V,n,m)
+#    elif which_mod==5:
+#        P_mu_tensor_V_befor_Pr, P_mu_tensor_V_after_Pr = P_tensor_V(lambda_sp_plus_so,sum_sp_plus_so,lowest_module.W3V,n,m)
+#    elif which_mod==6:
+#        P_mu_tensor_V_befor_Pr, P_mu_tensor_V_after_Pr = P_tensor_V(lambda_sp_plus_so,sum_sp_plus_so,lowest_module.Q_S3V,n,m)
+#    elif which_mod==7:
+#        P_mu_tensor_V_befor_Pr, P_mu_tensor_V_after_Pr = P_tensor_V(lambda_sp_plus_so,sum_sp_plus_so,lowest_module.Q_W3V,n,m)
+#    elif which_mod==8:
+#        P_mu_tensor_V_befor_Pr, P_mu_tensor_V_after_Pr = P_tensor_V(lambda_sp_plus_so,sum_sp_plus_so,lowest_module.Q_3V_TR,n,m)
+#
+#    elif which_mod==9:
+#        P_mu_tensor_V_befor_Pr, P_mu_tensor_V_after_Pr = P_tensor_V(lambda_sp_plus_so,sum_sp_plus_so,lowest_module.S4V,n,m)
+#    elif which_mod==10:
+#        P_mu_tensor_V_befor_Pr, P_mu_tensor_V_after_Pr = P_tensor_V(lambda_sp_plus_so,sum_sp_plus_so,lowest_module.W4V,n,m)
+#    else:
+#        print("---------输入有误---------")
+#        
 
     flag = _sage_const_0 
     if is_tensor_V_true(lambda_sp_plus_so, P_mu_tensor_V_after_Pr, lowest_module.basis_plus):
@@ -340,24 +350,26 @@ def again_calc_for_ten(L_sp_so_next,P_after,which_mod,n,m):
     lambda_sp_plus_so = L_sp_so_next[:]
     sum_sp_plus_so = P_after[:]
     lowest_module = Lowest_Module(n,m)
+    
+    P_mu_tensor_V_befor_Pr, P_mu_tensor_V_after_Pr = P_tensor_V(lambda_sp_plus_so,sum_sp_plus_so,lowest_module.get_module(which_mod),n,m)
 
-    if which_mod ==_sage_const_1 :
-        P_mu_tensor_V_befor_Pr, P_mu_tensor_V_after_Pr = P_tensor_V(lambda_sp_plus_so,sum_sp_plus_so,lowest_module.V,n,m)
-    elif which_mod==_sage_const_2 :
-        P_mu_tensor_V_befor_Pr, P_mu_tensor_V_after_Pr = P_tensor_V(lambda_sp_plus_so,sum_sp_plus_so,lowest_module.S2V,n,m)
-    elif which_mod==_sage_const_3 :
-        P_mu_tensor_V_befor_Pr, P_mu_tensor_V_after_Pr = P_tensor_V(lambda_sp_plus_so,sum_sp_plus_so,lowest_module.g,n,m)
-    elif which_mod==_sage_const_4 :
-        P_mu_tensor_V_befor_Pr, P_mu_tensor_V_after_Pr = P_tensor_V(lambda_sp_plus_so,sum_sp_plus_so,lowest_module.S3V,n,m)
-    elif which_mod==_sage_const_5 :
-        P_mu_tensor_V_befor_Pr, P_mu_tensor_V_after_Pr = P_tensor_V(lambda_sp_plus_so,sum_sp_plus_so,lowest_module.W3V,n,m)
-    elif which_mod==_sage_const_6 :
-        P_mu_tensor_V_befor_Pr, P_mu_tensor_V_after_Pr = P_tensor_V(lambda_sp_plus_so,sum_sp_plus_so,lowest_module.Q_S3V,n,m)
-    elif which_mod==_sage_const_7 :
-        P_mu_tensor_V_befor_Pr, P_mu_tensor_V_after_Pr = P_tensor_V(lambda_sp_plus_so,sum_sp_plus_so,lowest_module.Q_W3V,n,m)
-    else:
-        print("---------输入有误---------")
-        
+#    if which_mod ==1:
+#        P_mu_tensor_V_befor_Pr, P_mu_tensor_V_after_Pr = P_tensor_V(lambda_sp_plus_so,sum_sp_plus_so,lowest_module.V,n,m)
+#    elif which_mod==2:
+#        P_mu_tensor_V_befor_Pr, P_mu_tensor_V_after_Pr = P_tensor_V(lambda_sp_plus_so,sum_sp_plus_so,lowest_module.S2V,n,m)
+#    elif which_mod==3:
+#        P_mu_tensor_V_befor_Pr, P_mu_tensor_V_after_Pr = P_tensor_V(lambda_sp_plus_so,sum_sp_plus_so,lowest_module.g,n,m)
+#    elif which_mod==4:
+#        P_mu_tensor_V_befor_Pr, P_mu_tensor_V_after_Pr = P_tensor_V(lambda_sp_plus_so,sum_sp_plus_so,lowest_module.S3V,n,m)
+#    elif which_mod==5:
+#        P_mu_tensor_V_befor_Pr, P_mu_tensor_V_after_Pr = P_tensor_V(lambda_sp_plus_so,sum_sp_plus_so,lowest_module.W3V,n,m)
+#    elif which_mod==6:
+#        P_mu_tensor_V_befor_Pr, P_mu_tensor_V_after_Pr = P_tensor_V(lambda_sp_plus_so,sum_sp_plus_so,lowest_module.Q_S3V,n,m)
+#    elif which_mod==7:
+#        P_mu_tensor_V_befor_Pr, P_mu_tensor_V_after_Pr = P_tensor_V(lambda_sp_plus_so,sum_sp_plus_so,lowest_module.Q_W3V,n,m)
+#    else:
+#        print("---------输入有误---------")
+#        
 
     flag = _sage_const_0 
     if is_tensor_V_true(lambda_sp_plus_so, P_mu_tensor_V_after_Pr, lowest_module.basis_plus):
@@ -378,23 +390,24 @@ def P_tensor_V_and_judge_wheather_minest(n,m,at_lambda_sp_plus_so,sum_sp_plus_so
     print("")
 
     lowest_module = Lowest_Module(n,m)
+    P_mu_tensor_V_befor_Pr, P_mu_tensor_V_after_Pr = P_tensor_V(at_lambda_sp_plus_so,sum_sp_plus_so,lowest_module.get_module(which_mod),n,m)
 
-    if which_mod ==_sage_const_1 :
-        P_mu_tensor_V_befor_Pr, P_mu_tensor_V_after_Pr = P_tensor_V(at_lambda_sp_plus_so,sum_sp_plus_so,lowest_module.V,n,m)
-    elif which_mod==_sage_const_2 :
-        P_mu_tensor_V_befor_Pr, P_mu_tensor_V_after_Pr = P_tensor_V(at_lambda_sp_plus_so,sum_sp_plus_so,lowest_module.S2V,n,m)
-    elif which_mod==_sage_const_3 :
-        P_mu_tensor_V_befor_Pr, P_mu_tensor_V_after_Pr = P_tensor_V(at_lambda_sp_plus_so,sum_sp_plus_so,lowest_module.g,n,m)
-    elif which_mod==_sage_const_4 :
-        P_mu_tensor_V_befor_Pr, P_mu_tensor_V_after_Pr = P_tensor_V(at_lambda_sp_plus_so,sum_sp_plus_so,lowest_module.S3V,n,m)
-    elif which_mod==_sage_const_5 :
-        P_mu_tensor_V_befor_Pr, P_mu_tensor_V_after_Pr = P_tensor_V(at_lambda_sp_plus_so,sum_sp_plus_so,lowest_module.W3V,n,m)
-    elif which_mod==_sage_const_6 :
-        P_mu_tensor_V_befor_Pr, P_mu_tensor_V_after_Pr = P_tensor_V(at_lambda_sp_plus_so,sum_sp_plus_so,lowest_module.Q_S3V,n,m)
-    elif which_mod==_sage_const_7 :
-        P_mu_tensor_V_befor_Pr, P_mu_tensor_V_after_Pr = P_tensor_V(at_lambda_sp_plus_so,sum_sp_plus_so,lowest_module.Q_W3V,n,m)
-    else:
-        print("--------输入错误----------")
+#    if which_mod ==1:
+#        P_mu_tensor_V_befor_Pr, P_mu_tensor_V_after_Pr = P_tensor_V(at_lambda_sp_plus_so,sum_sp_plus_so,lowest_module.V,n,m)
+#    elif which_mod==2:
+#        P_mu_tensor_V_befor_Pr, P_mu_tensor_V_after_Pr = P_tensor_V(at_lambda_sp_plus_so,sum_sp_plus_so,lowest_module.S2V,n,m)
+#    elif which_mod==3:
+#        P_mu_tensor_V_befor_Pr, P_mu_tensor_V_after_Pr = P_tensor_V(at_lambda_sp_plus_so,sum_sp_plus_so,lowest_module.g,n,m)
+#    elif which_mod==4:
+#        P_mu_tensor_V_befor_Pr, P_mu_tensor_V_after_Pr = P_tensor_V(at_lambda_sp_plus_so,sum_sp_plus_so,lowest_module.S3V,n,m)
+#    elif which_mod==5:
+#        P_mu_tensor_V_befor_Pr, P_mu_tensor_V_after_Pr = P_tensor_V(at_lambda_sp_plus_so,sum_sp_plus_so,lowest_module.W3V,n,m)
+#    elif which_mod==6:
+#        P_mu_tensor_V_befor_Pr, P_mu_tensor_V_after_Pr = P_tensor_V(at_lambda_sp_plus_so,sum_sp_plus_so,lowest_module.Q_S3V,n,m)
+#    elif which_mod==7:
+#        P_mu_tensor_V_befor_Pr, P_mu_tensor_V_after_Pr = P_tensor_V(at_lambda_sp_plus_so,sum_sp_plus_so,lowest_module.Q_W3V,n,m)
+#    else:
+#        print("--------输入错误----------")
     flag = _sage_const_0 
     print(f"P_mu_tensor_V_befor_Pr: {len(P_mu_tensor_V_befor_Pr)}")
     print(f"P_mu_tensor_V_after_Pr: {len(P_mu_tensor_V_after_Pr)}")
@@ -603,22 +616,29 @@ def test_a(nn,mm,typical_lambda_sp,typical_lambda_so,atypical_lambda_sp_plus_so,
 
     lowest_module = Lowest_Module(n,m)
     print(f"sum_sp_plus_so: {len(sum_sp_plus_so)}")
-    if which_mod ==_sage_const_1 :
-        P_mu_tensor_V_befor_Pr, P_mu_tensor_V_after_Pr = P_tensor_V(at_lambda_sp_plus_so,sum_sp_plus_so,lowest_module.V,n,m)
-    elif which_mod==_sage_const_2 :
-        P_mu_tensor_V_befor_Pr, P_mu_tensor_V_after_Pr = P_tensor_V(at_lambda_sp_plus_so,sum_sp_plus_so,lowest_module.S2V,n,m)
-    elif which_mod==_sage_const_3 :
-        P_mu_tensor_V_befor_Pr, P_mu_tensor_V_after_Pr = P_tensor_V(at_lambda_sp_plus_so,sum_sp_plus_so,lowest_module.g,n,m)
-    elif which_mod==_sage_const_4 :
-        P_mu_tensor_V_befor_Pr, P_mu_tensor_V_after_Pr = P_tensor_V(at_lambda_sp_plus_so,sum_sp_plus_so,lowest_module.S3V,n,m)
-    elif which_mod==_sage_const_5 :
-        P_mu_tensor_V_befor_Pr, P_mu_tensor_V_after_Pr = P_tensor_V(at_lambda_sp_plus_so,sum_sp_plus_so,lowest_module.W3V,n,m)
-    elif which_mod==_sage_const_6 :
-        P_mu_tensor_V_befor_Pr, P_mu_tensor_V_after_Pr = P_tensor_V(at_lambda_sp_plus_so,sum_sp_plus_so,lowest_module.Q_S3V,n,m)
-    elif which_mod==_sage_const_7 :
-        P_mu_tensor_V_befor_Pr, P_mu_tensor_V_after_Pr = P_tensor_V(at_lambda_sp_plus_so,sum_sp_plus_so,lowest_module.Q_W3V,n,m)
-    else:
-        print("--------输入错误----------")
+    P_mu_tensor_V_befor_Pr, P_mu_tensor_V_after_Pr = P_tensor_V(at_lambda_sp_plus_so,sum_sp_plus_so,lowest_module.get_module(which_mod),n,m)
+#    if which_mod ==1:
+#        P_mu_tensor_V_befor_Pr, P_mu_tensor_V_after_Pr = P_tensor_V(at_lambda_sp_plus_so,sum_sp_plus_so,lowest_module.V,n,m)
+#    elif which_mod==2:
+#        P_mu_tensor_V_befor_Pr, P_mu_tensor_V_after_Pr = P_tensor_V(at_lambda_sp_plus_so,sum_sp_plus_so,lowest_module.S2V,n,m)
+#    elif which_mod==3:
+#        P_mu_tensor_V_befor_Pr, P_mu_tensor_V_after_Pr = P_tensor_V(at_lambda_sp_plus_so,sum_sp_plus_so,lowest_module.g,n,m)
+#    elif which_mod==4:
+#        P_mu_tensor_V_befor_Pr, P_mu_tensor_V_after_Pr = P_tensor_V(at_lambda_sp_plus_so,sum_sp_plus_so,lowest_module.S3V,n,m)
+#    elif which_mod==5:
+#        P_mu_tensor_V_befor_Pr, P_mu_tensor_V_after_Pr = P_tensor_V(at_lambda_sp_plus_so,sum_sp_plus_so,lowest_module.W3V,n,m)
+#    elif which_mod==6:
+#        P_mu_tensor_V_befor_Pr, P_mu_tensor_V_after_Pr = P_tensor_V(at_lambda_sp_plus_so,sum_sp_plus_so,lowest_module.Q_S3V,n,m)
+#    elif which_mod==7:
+#        P_mu_tensor_V_befor_Pr, P_mu_tensor_V_after_Pr = P_tensor_V(at_lambda_sp_plus_so,sum_sp_plus_so,lowest_module.Q_W3V,n,m)
+#    elif which_mod==8:
+#        P_mu_tensor_V_befor_Pr, P_mu_tensor_V_after_Pr = P_tensor_V(at_lambda_sp_plus_so,sum_sp_plus_so,lowest_module.Q_3V_TR,n,m)
+#    elif which_mod==9:
+#        P_mu_tensor_V_befor_Pr, P_mu_tensor_V_after_Pr = P_tensor_V(at_lambda_sp_plus_so,sum_sp_plus_so,lowest_module.S4V,n,m)
+#    elif which_mod==10:
+#        P_mu_tensor_V_befor_Pr, P_mu_tensor_V_after_Pr = P_tensor_V(at_lambda_sp_plus_so,sum_sp_plus_so,lowest_module.W4V,n,m)
+#    else:
+#        print("--------输入错误----------")
     flag = _sage_const_0 
 
     print(f"P_mu_tensor_V_befor_Pr: {len(P_mu_tensor_V_befor_Pr)}")
@@ -705,20 +725,25 @@ def find_path_vector( lam, n, m , which_mod,flag=_sage_const_0 ):
     results_g = []
     lowest_module_V_tem = []
     lowest_module_V = []
-    if which_mod ==_sage_const_1 :
-        lowest_module_V_tem = lowest_module.V
-    if which_mod ==_sage_const_2 :
-        lowest_module_V_tem = lowest_module.S2V
-    if which_mod ==_sage_const_3 :
-        lowest_module_V_tem = lowest_module.g
-    if which_mod ==_sage_const_4 :
-        lowest_module_V_tem = lowest_module.S3V
-    if which_mod ==_sage_const_5 :
-        lowest_module_V_tem = lowest_module.W3V
-    if which_mod ==_sage_const_6 :
-        lowest_module_V_tem = lowest_module.Q_S3V
-    if which_mod ==_sage_const_7 :
-        lowest_module_V_tem = lowest_module.Q_W3V
+
+    lowest_module_V_tem = lowest_module.get_module(which_mod)
+
+#    if which_mod ==1:
+#        lowest_module_V_tem = lowest_module.V
+#    if which_mod ==2:
+#        lowest_module_V_tem = lowest_module.S2V
+#    if which_mod ==3:
+#        lowest_module_V_tem = lowest_module.g
+#    if which_mod ==4:
+#        lowest_module_V_tem = lowest_module.S3V
+#    if which_mod ==5:
+#        lowest_module_V_tem = lowest_module.W3V
+#    if which_mod ==6:
+#        lowest_module_V_tem = lowest_module.Q_S3V
+#    if which_mod ==7:
+#        lowest_module_V_tem = lowest_module.Q_W3V
+#    if which_mod ==8:
+#        lowest_module_V_tem = lowest_module.Q_3V_TR
 
     for v in lowest_module_V_tem:
         lowest_module_V.append(v[:])
@@ -1103,53 +1128,41 @@ if __name__ == "__main__":
                 break  # 如果成功转换为整数，跳出循环
             except ValueError:
                 print("输入无效，请输入一个整数。")
+        if select_case == -_sage_const_1 :
+            test_kl(_sage_const_2 )
         if select_case==_sage_const_0 :
 
+            #%        self.V = []
+            #%        self.S2V = []
+            #%        self.g = []
+            #%        self.S2VV = sym_2(n,m)
+            #%        self.gV = wedge_2(n,m)
+            #%        self.S3V = []
+            #%        self.Q_S3V = []
+            #%        self.Q_W3V = []
+            #%        self.W3V = wedge_3(n,m)
+            #%        self.S3VV = sym_3(n,m)
             lowest_module = Lowest_Module(n,m)
-            lowest_weight = which_one_lowest(lowest_module.Q_S3V,lowest_module.basis_plus)
-            lowest_weight_2 = which_one_lowest(lowest_module.Q_W3V,lowest_module.basis_plus)
-            print(f"Q_S3Q: {len(lowest_module.Q_S3V)}")
-            for v in lowest_weight:
-                print(v)
+            
+            print(f"S2V:{len(lowest_module.S2V)}:{which_one_lowest(lowest_module.S2V,lowest_module.basis_plus)}")
+            print(f"g:{len(lowest_module.g)}:{which_one_lowest(lowest_module.g,lowest_module.basis_plus)}")
+            print(f"S2VV:{len(lowest_module.S2VV)}:{which_one_lowest(lowest_module.S2VV,lowest_module.basis_plus)}")
+            print(f"gV:{len(lowest_module.gV)}:{which_one_lowest(lowest_module.gV,lowest_module.basis_plus)}")
+            print(f"S3V:{len(lowest_module.S3V)}:{which_one_lowest(lowest_module.S3V,lowest_module.basis_plus)}")
+            print(f"W3V:{len(lowest_module.W3V)}:{which_one_lowest(lowest_module.W3V,lowest_module.basis_plus)}")
+            print(f"S3VV:{len(lowest_module.S3VV)}:{which_one_lowest(lowest_module.S3VV,lowest_module.basis_plus)}")
+            print(f"Q_S3V:{len(lowest_module.Q_S3V)}:{which_one_lowest(lowest_module.Q_S3V,lowest_module.basis_plus)}")
+            print(f"Q_W3V:{len(lowest_module.Q_W3V)}:{which_one_lowest(lowest_module.Q_W3V,lowest_module.basis_plus)}")
+            print(f"Q_3V_TR:{len(lowest_module.Q_3V_TR)}:{which_one_lowest(lowest_module.Q_3V_TR,lowest_module.basis_plus)}")
 
-            print(f"Q_W3Q: {len(lowest_module.Q_W3V)}")
-            for v in lowest_weight:
-                print(v)
-            if contains_with_counts(lowest_module.Q_S3V,lowest_module.Q_W3V) and contains_with_counts(lowest_module.Q_W3V,lowest_module.Q_S3V):
-                print("====模一样的====")
+            print(f"S4V:{len(lowest_module.S4V)}:{which_one_lowest(lowest_module.S4V,lowest_module.basis_plus)}")
+            print(f"W4V:{len(lowest_module.W4V)}:{which_one_lowest(lowest_module.W4V,lowest_module.basis_plus)}")
+        
+
+
 
             continue
 
-            user_input = input("请输入文档的名字:")# 将输入转换为有理数列表并创建向量
-            if user_input=='':
-                print("返回操作")
-                continue
-
-            with open('test//'+user_input+'.txt', 'r') as f:
-                lines = f.readlines()
-
-            rat_list = [QQ(x.strip()) for x in lines[_sage_const_0 ].split(',')]
-            key1 = vector(QQ,rat_list)          
-
-            flag = auto_calc_long_time(store,key1,n,m,_sage_const_0 )
-            if flag:
-                print("计算成功!")
-
-           # lowest_module = Lowest_Module(n,m)
-           # print(f"测试s3v:{len(lowest_module.S3V)}")
-           # print(f"测试s3vv:{len(lowest_module.S3VV)}")
-           # print(f"测试w3v:{len(lowest_module.W3V)}")
-           # print(f"测试s2v:{len(lowest_module.S2V)}")
-           # print(f"测试s2vv:{len(lowest_module.S2VV)}")
-           # print(f"测试gV:{len(lowest_module.gV)}")
-           # print(f"测试g:{len(lowest_module.g)}")
-           # tem = vectors_set_min(lowest_module.S3VV,lowest_module.S3V)
-           # print(tem)
-           # tem = vectors_set_min(lowest_module.S2V,lowest_module.S2VV)
-           # print(tem)
-           # tem = vectors_set_min(lowest_module.g,lowest_module.gV)
-           # print(tem)
-           # test_kl(n)
 
         if select_case==_sage_const_14 :
             print("读取要计算的特征标向量")
@@ -1355,6 +1368,13 @@ if __name__ == "__main__":
                 print("使用模:Q_S3V")# 将输入转换为有理数列表并创建向量
             elif which_mod==_sage_const_7 :
                 print("使用模:Q_W3V")# 将输入转换为有理数列表并创建向量
+            elif which_mod==_sage_const_8 :
+                print("使用模:Q_3V_TR")# 将输入转换为有理数列表并创建向量
+
+            elif which_mod==_sage_const_9 :
+                print("使用模:S4V")# 将输入转换为有理数列表并创建向量
+            elif which_mod==_sage_const_10 :
+                print("使用模:W4V")# 将输入转换为有理数列表并创建向量
             typical_lambda_sp = typical_lambda_sp_plus_so[:n]
             typical_lambda_so = typical_lambda_sp_plus_so[-m:]
             test_a(n,m,typical_lambda_sp,typical_lambda_so, atypical_lambda_sp_plus_so,which_mod)
@@ -1416,6 +1436,8 @@ if __name__ == "__main__":
                     print("使用模:Q_S3V")# 将输入转换为有理数列表并创建向量
                 elif which_mod==_sage_const_7 :
                     print("使用模:Q_W3V")# 将输入转换为有理数列表并创建向量
+                elif which_mod==_sage_const_7 :
+                    print("使用模:Q_3V_TR")# 将输入转换为有理数列表并创建向量
 
                 P_mu_tensor_V_after_Pr = again_calc(atypical_lambda_sp_plus_so,P_mu_tensor_V_after_Pr,which_mod,n,m)
             elif sub_select_case ==_sage_const_1 :
@@ -1505,27 +1527,28 @@ if __name__ == "__main__":
             user_input_W = input("请输入模1，2，3，4，5:  ")# 将输入转换为有理数列表并创建向量
 
             which_mod = int(user_input_W)
-            if which_mod ==_sage_const_1 :
-                print("使用模:V")# 将输入转换为有理数列表并创建向量
-                P_tensor_V_show(P_mu_tensor_V_after_Pr,_sage_const_1 ,n,m)
-            elif which_mod==_sage_const_2 :
-                print("使用模:S2V")# 将输入转换为有理数列表并创建向量
-                P_tensor_V_show(P_mu_tensor_V_after_Pr,_sage_const_2 ,n,m)
-            elif which_mod==_sage_const_3 :
-                print("使用模:g")# 将输入转换为有理数列表并创建向量
-                P_tensor_V_show(P_mu_tensor_V_after_Pr,_sage_const_3 ,n,m)
-            elif which_mod==_sage_const_4 :
-                print("使用模:S3V")# 将输入转换为有理数列表并创建向量
-                P_tensor_V_show(P_mu_tensor_V_after_Pr,_sage_const_4 ,n,m)
-            elif which_mod==_sage_const_5 :
-                print("使用模:W3V")# 将输入转换为有理数列表并创建向量
-                P_tensor_V_show(P_mu_tensor_V_after_Pr,_sage_const_5 ,n,m)
-            elif which_mod==_sage_const_6 :
-                print("使用模:Q_S3V")# 将输入转换为有理数列表并创建向量
-                P_tensor_V_show(P_mu_tensor_V_after_Pr,_sage_const_4 ,n,m)
-            elif which_mod==_sage_const_7 :
-                print("使用模:Q_W3V")# 将输入转换为有理数列表并创建向量
-                P_tensor_V_show(P_mu_tensor_V_after_Pr,_sage_const_5 ,n,m)
+            P_tensor_V_show(P_mu_tensor_V_after_Pr,which_mod,n,m)
+#            if which_mod ==1:
+#                print("使用模:V")# 将输入转换为有理数列表并创建向量
+#                P_tensor_V_show(P_mu_tensor_V_after_Pr,1,n,m)
+#            elif which_mod==2:
+#                print("使用模:S2V")# 将输入转换为有理数列表并创建向量
+#                P_tensor_V_show(P_mu_tensor_V_after_Pr,2,n,m)
+#            elif which_mod==3:
+#                print("使用模:g")# 将输入转换为有理数列表并创建向量
+#                P_tensor_V_show(P_mu_tensor_V_after_Pr,3,n,m)
+#            elif which_mod==4:
+#                print("使用模:S3V")# 将输入转换为有理数列表并创建向量
+#                P_tensor_V_show(P_mu_tensor_V_after_Pr,4,n,m)
+#            elif which_mod==5:
+#                print("使用模:W3V")# 将输入转换为有理数列表并创建向量
+#                P_tensor_V_show(P_mu_tensor_V_after_Pr,5,n,m)
+#            elif which_mod==6:
+#                print("使用模:Q_S3V")# 将输入转换为有理数列表并创建向量
+#                P_tensor_V_show(P_mu_tensor_V_after_Pr,6,n,m)
+#            elif which_mod==7:
+#                print("使用模:Q_W3V")# 将输入转换为有理数列表并创建向量
+#                P_tensor_V_show(P_mu_tensor_V_after_Pr,7,n,m)
 
         elif select_case==_sage_const_8 :
             user_input = input("请输入权集所在文档的名字:")# 将输入转换为有理数列表并创建向量
